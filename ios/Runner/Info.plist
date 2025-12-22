@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+
+	<key>CFBundleDisplayName</key>
+	<string>Palloncino</string>
+
+	<!-- Photo Library Permissions -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to save images to your photo library.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to select and save images.</string>
+
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+
+	<!-- File Access / Sharing -->
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Allow access to save files locally.</string>
+
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+
+	<key>UIFileSharingEnabled</key>
+	<true/>
+
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+
+	<key>CFBundleName</key>
+	<string>pallon_lastversion</string>
+
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+
+	<key>CFBundleSignature</key>
+	<string>????</string>
+
+	<!-- URL Schemes (Google Sign-In) -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.444759864301-l4gsdteh9b5qgv00m10a35vsl4tplb4a</string>
+			</array>
+		</dict>
+	</array>
+
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+
+	<!-- Google IDs -->
+	<key>GIDClientID</key>
+	<string>444759864301-l4gsdteh9b5qgv00m10a35vsl4tplb4a.apps.googleusercontent.com</string>
+
+	<key>GIDServerClientID</key>
+	<string>444759864301-l4gsdteh9b5qgv00m10a35vsl4tplb4a.apps.googleusercontent.com</string>
+
+	<!-- Allowed URL Schemes to open -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>sms</string>
+		<string>tel</string>
+	</array>
+
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+
+	<!-- Camera / Mic Permissions -->
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to your camera to allow you to take new photos for your profile or posts.</string>
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires access to your microphone to record audio when capturing videos.</string>
+
+	<!-- Indirect Input -->
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+
+	<!-- Background Modes (merged) -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>fetch</string>
+		<string>location</string>
+	</array>
+
+	<!-- Launch / Main Storyboard -->
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+
+	<!-- Orientation -->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<!-- Calendar Permission -->
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Access most functions for calendar viewing and editing.</string>
+
+	<!-- Location Permissions (strings بدل true) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We use your location while the app is in use to provide location-based features.</string>
+
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need access to your location at all times to support background location features.</string>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We use your location both in the background and while using the app to provide continuous location-based services.</string>
+</dict>
+</plist>

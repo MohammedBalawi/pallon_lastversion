@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "444759864301",
+    "project_id": "iconnectv2-49c98",
+    "storage_bucket": "iconnectv2-49c98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444759864301:android:ceedba25ca458d27c8ade4",
+        "android_client_info": {
+          "package_name": "com.example.pallon_lastversion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444759864301-n37la1bsnidk5b4ab3ditbia2rljtht4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pallon_lastversion",
+            "certificate_hash": "119cef5ceef4780c959d401f3c1de71447626ab6"
+          }
+        },
+        {
+          "client_id": "444759864301-u38ue6s39jjnkeuhseisj7tftkfusgip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdnvAsj31HgOwroU3RO7G-QK178by3eJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444759864301-kcmhlopmi32t4l1mps1j2d3tvctn22o1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "444759864301-cb330mb9u5d2jvr2dp479jpr575u4488.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pallonLastversion"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>444759864301-cb330mb9u5d2jvr2dp479jpr575u4488.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.444759864301-cb330mb9u5d2jvr2dp479jpr575u4488</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>444759864301-1057mor4s4o1346uigoko1b71d65rh94.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBG1eaoXlZbOPWLv4-WrqpaSLgWH82QZZ0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>444759864301</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.pallonLastversion</string>
+	<key>PROJECT_ID</key>
+	<string>iconnectv2-49c98</string>
+	<key>STORAGE_BUCKET</key>
+	<string>iconnectv2-49c98.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:444759864301:ios:729e953524701d19c8ade4</string>
+</dict>
+</plist>
