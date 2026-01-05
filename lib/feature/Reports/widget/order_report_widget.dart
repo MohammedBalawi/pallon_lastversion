@@ -83,7 +83,7 @@ Widget OrderReportWidget(BuildContext context, String type) {
           item: [],
           float: data['float'],
           address: data['address'],
-          date: data['date'],
+          date: ReqDataModel.normalizeDate(data['date']),
           hour: data['hour'],
           phone: data['phone'],
           createby: data['createby'],
@@ -97,6 +97,10 @@ Widget OrderReportWidget(BuildContext context, String type) {
           typeOfEvent: data['typeofevent'],
           branch: data["branch"],
           typebank: data["banktype"],
+          invoiceNumber: (data['invoiceNumber'] ?? data['invoice_number'] ?? "").toString(),
+          eventName: (data['eventName'] ?? data['event_name'] ?? "").toString(),
+          requestDate: ReqDataModel.normalizeDate(data['requestDate'] ?? data['request_date']),
+          createdAt: ReqDataModel.normalizeDate(data['createdAt']),
         );
 
         DataRow row = DataRow(

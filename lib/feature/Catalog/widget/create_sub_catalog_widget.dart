@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Utils/manager_fonts.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/catalog_model.dart';
@@ -355,8 +356,8 @@ class _CreateSubCatalogWidgetState extends State<CreateSubCatalogWidget> {
   }
 
   void _pickImage(ImageSource source) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
+    final pickedFile = await pickImageWithPermission(
+      context,
       source: source,
       imageQuality: 75,
     );

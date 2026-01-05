@@ -16,6 +16,10 @@ class ReqDataModel {
   String notes;
   String ownerOfevent;
   String? orderNumber;
+  String? invoiceNumber;
+  String? eventName;
+  String? requestDate;
+  String? createdAt;
   String phone;
   String status;
   String total;
@@ -59,6 +63,10 @@ class ReqDataModel {
     required this.branch,
     required this.typebank,
     this.orderNumber,
+    this.invoiceNumber,
+    this.eventName,
+    this.requestDate,
+    this.createdAt,
     this.task,
     this.taskstatus,
     this.jobOrderNumber,
@@ -67,6 +75,35 @@ class ReqDataModel {
 
   static String _s(dynamic v, {String def = ""}) {
     if (v == null) return def;
+    return v.toString();
+  }
+
+  static String formatOrderNumber(dynamic raw) {
+    final value = raw?.toString().trim() ?? "";
+    if (value.isEmpty) return "";
+    final parsed = int.tryParse(value);
+    if (parsed == null) return value;
+    return parsed.toString().padLeft(6, '0');
+  }
+
+  String canonicalOrderNumber() {
+    final invoice = (invoiceNumber ?? "").trim();
+    if (invoice.isNotEmpty) return formatOrderNumber(invoice);
+    return formatOrderNumber(orderNumber ?? "");
+  }
+
+  String get canonicalNumber => canonicalOrderNumber();
+
+  String displayTitleName({String fallback = "-"}) {
+    final clientName = name.trim();
+    return clientName.isNotEmpty ? clientName : fallback;
+  }
+
+  static String normalizeDate(dynamic v) {
+    if (v == null) return "";
+    if (v is Timestamp) return v.toDate().toIso8601String();
+    if (v is DateTime) return v.toIso8601String();
+    if (v is num) return DateTime.fromMillisecondsSinceEpoch(v.toInt()).toIso8601String();
     return v.toString();
   }
 
@@ -132,9 +169,18 @@ class ReqDataModel {
       }
     }
 
-    final orderNumber = _nullableStr(data['orderNumber']) ?? _nullableStr(data['order_number']);
+    final orderNumber = _nullableStr(data['orderNumber']) ??
+        _nullableStr(data['ordernumber']) ??
+        _nullableStr(data['order_number']);
 
-    final jobOrderNumber = _nullableStr(data['ordernumber']) ?? _nullableStr(data['jobOrderNumber']);
+    final invoiceNumber = _nullableStr(data['invoiceNumber']) ?? _nullableStr(data['invoice_number']);
+
+    final requestDate = _nullableStr(normalizeDate(data['requestDate'])) ??
+        _nullableStr(normalizeDate(data['request_date']));
+    final eventName = _nullableStr(data['eventName']) ?? _nullableStr(data['event_name']);
+    final createdAt = _nullableStr(normalizeDate(data['createdAt']));
+
+    final jobOrderNumber = _nullableStr(data['jobOrderNumber']);
 
     final jobNoInt = _int(data['jobNoInt']);
 
@@ -147,7 +193,7 @@ class ReqDataModel {
       item: items,
       float: _numStr(data['float']),
       address: _s(data['address']),
-      date: _s(data['date']),
+      date: normalizeDate(data['date']),
       hour: _s(data['hour']),
       phone: _s(data['phone']),
       createby: _s(data['createby']),
@@ -163,6 +209,10 @@ class ReqDataModel {
       branch: _s(data['branch']),
       typebank: _s(data['banktype']),
       orderNumber: orderNumber,
+      invoiceNumber: invoiceNumber,
+      eventName: eventName,
+      requestDate: requestDate,
+      createdAt: createdAt,
       task: _nullableStr(data['task']),
       taskstatus: _nullableStr(data['taskstatus']),
       jobOrderNumber: jobOrderNumber,
@@ -204,6 +254,10 @@ class ReqDataModel {
       'banktype': typebank,
 
       'orderNumber': orderNumber,
+      'invoiceNumber': invoiceNumber,
+      'eventName': eventName,
+      'requestDate': requestDate,
+      'createdAt': createdAt,
 
       'task': task,
       'taskstatus': taskstatus,
@@ -231,6 +285,10 @@ class ReqDataModel {
     String? notes,
     String? ownerOfevent,
     String? orderNumber,
+    String? invoiceNumber,
+    String? eventName,
+    String? requestDate,
+    String? createdAt,
     String? phone,
     String? status,
     String? total,
@@ -271,6 +329,10 @@ class ReqDataModel {
       branch: branch ?? this.branch,
       typebank: typebank ?? this.typebank,
       orderNumber: orderNumber ?? this.orderNumber,
+      invoiceNumber: invoiceNumber ?? this.invoiceNumber,
+      eventName: eventName ?? this.eventName,
+      requestDate: requestDate ?? this.requestDate,
+      createdAt: createdAt ?? this.createdAt,
       task: task ?? this.task,
       taskstatus: taskstatus ?? this.taskstatus,
       jobOrderNumber: jobOrderNumber ?? this.jobOrderNumber,

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../models/banner_model.dart';
 import '../functions/banner_function.dart';
 
@@ -486,8 +487,10 @@ class _EditBannerWidget extends State<EditBannerWidget> {
 
 
   void _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await pickImageWithPermission(
+      context,
+      source: ImageSource.gallery,
+    );
 
     if (pickedFile != null) {
       setState(() {
@@ -510,8 +513,10 @@ class _EditBannerWidget extends State<EditBannerWidget> {
   }
 
   void _pickImage2() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await pickImageWithPermission(
+      context,
+      source: ImageSource.gallery,
+    );
 
     if (pickedFile != null) {
       setState(() {

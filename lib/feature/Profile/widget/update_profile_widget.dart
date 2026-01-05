@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:pallon_lastversion/Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../models/user_model.dart';
 import '../function/profile_function.dart';
 import 'custom_text_field.dart';
@@ -48,8 +49,10 @@ class _UpdateProfileWidget extends State<UpdateProfileWidget> {
 
 
   Future<void> _pickImageFromGallery() async {
-    final picker     = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await pickImageWithPermission(
+      context,
+      source: ImageSource.gallery,
+    );
 
     if (pickedFile != null) {
       setState(() => _image = File(pickedFile.path));
@@ -63,8 +66,10 @@ class _UpdateProfileWidget extends State<UpdateProfileWidget> {
   }
 
   Future<void> _pickImageFromCamera() async {
-    final picker     = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    final pickedFile = await pickImageWithPermission(
+      context,
+      source: ImageSource.camera,
+    );
 
     if (pickedFile != null) {
       setState(() => _image = File(pickedFile.path));

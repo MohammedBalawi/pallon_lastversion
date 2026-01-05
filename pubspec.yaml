@@ -72,7 +72,8 @@ flutter:
 
   assets:
     - lib/core/Utils/assets/Images/
-    - lib/core/Utils/assets/lang/
+    - lib/Core/Utils/assets/lang/en.json
+    - lib/Core/Utils/assets/lang/ar.json
   fonts:
     - family: Cairo
       fonts:

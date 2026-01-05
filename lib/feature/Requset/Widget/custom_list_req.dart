@@ -44,7 +44,8 @@ Widget CustomListReq(BuildContext context) {
       final List<ReqDataModel> lists = [];
 
       for (final doc in docs) {
-        final status = safeStr(doc.data() is Map ? (doc.get('status')) : null);
+        final data = doc.data() as Map<String, dynamic>;
+        final status = safeStr(data['status']);
 
         if (status == "order" || status == "finish") continue;
 
@@ -58,7 +59,7 @@ Widget CustomListReq(BuildContext context) {
             item: [],
             float: safeNum(doc.get('float')),
             address: safeStr(doc.get('address')),
-            date: safeStr(doc.get('date')),
+            date: ReqDataModel.normalizeDate(doc.get('date')),
             hour: safeStr(doc.get('hour')),
             phone: safeStr(doc.get('phone')),
             createby: safeStr(doc.get('createby')),
@@ -72,6 +73,10 @@ Widget CustomListReq(BuildContext context) {
             typeOfEvent: safeStr(doc.get('typeofevent')),
             branch: safeStr(doc.get('branch')),
             typebank: safeStr(doc.get('banktype')),
+            invoiceNumber: safeStr(data['invoiceNumber'] ?? data['invoice_number'] ?? ""),
+            eventName: safeStr(data['eventName'] ?? data['event_name'] ?? ""),
+            requestDate: ReqDataModel.normalizeDate(data['requestDate'] ?? data['request_date']),
+            createdAt: ReqDataModel.normalizeDate(data['createdAt']),
           ),
         );
       }

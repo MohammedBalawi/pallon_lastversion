@@ -8,16 +8,16 @@ import 'package:pallon_lastversion/models/image_model.dart';
 import 'package:pallon_lastversion/models/order_model.dart';
 import 'package:pallon_lastversion/models/user_model.dart';
 
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Widgets/image_view.dart';
 import '../funcation/task_function.dart';
 
 final FirebaseFirestore _firestore=FirebaseFirestore.instance;
-final ImagePicker _picker = ImagePicker();
 Widget DesginImageStream(BuildContext context,OrderModel order,UserModel user){
   Future<void> _pickImage() async {
-    final List<XFile>? pickedFiles = await _picker.pickMultiImage();
+    final pickedFiles = await pickMultiImageWithPermission(context);
     List<File> _images=[];
-    if (pickedFiles != null && pickedFiles.isNotEmpty) {
+    if (pickedFiles.isNotEmpty) {
       _images.addAll(pickedFiles.map((xFile) => File(xFile.path)));
       UploadDesgin(_images,context,order);
     }

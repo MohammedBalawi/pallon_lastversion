@@ -7,6 +7,7 @@ import '../../feature/splash/views/splash_view.dart';
 
 
 Map<String, Widget Function(BuildContext)> appRoutes = {
+  '/':(context)=>SplashView(),
   SplashView.id:(context)=>SplashView(),
   AuthLoginView.id:(context)=>AuthLoginView(),
 };

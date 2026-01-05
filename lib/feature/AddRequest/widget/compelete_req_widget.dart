@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pallon_lastversion/Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../Core/Widgets/image_view.dart';
 import '../../../models/catalog_item_model.dart';
@@ -54,7 +55,6 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
   bool _showModel = false;
 
   final List<File> _images = [];
-  final ImagePicker _picker = ImagePicker();
 
   List<Catalog> _fullCatalog = [];
   Catalog? _selectedCatalog;
@@ -255,7 +255,8 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
     final source = await _showPickSourceSheet();
     if (source == null) return;
 
-    final XFile? file = await _picker.pickImage(
+    final XFile? file = await pickImageWithPermission(
+      context,
       source: source,
       imageQuality: 80,
     );
@@ -270,14 +271,19 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
     if (source == null) return;
 
     if (source == ImageSource.gallery) {
-      final List<XFile>? pickedFiles =
-          await _picker.pickMultiImage(imageQuality: 80);
-      if (pickedFiles != null && pickedFiles.isNotEmpty) {
+      final pickedFiles = await pickMultiImageWithPermission(
+        context,
+        imageQuality: 80,
+      );
+      if (pickedFiles.isNotEmpty) {
         setState(() => _images.addAll(pickedFiles.map((x) => File(x.path))));
       }
     } else {
-      final XFile? file =
-          await _picker.pickImage(source: ImageSource.camera, imageQuality: 80);
+      final XFile? file = await pickImageWithPermission(
+        context,
+        source: ImageSource.camera,
+        imageQuality: 80,
+      );
       if (file != null) {
         setState(() => _images.add(File(file.path)));
       }

@@ -21,15 +21,20 @@ final FirebaseFirestore _firestore=FirebaseFirestore.instance;
 Future<TaskModel> GetTaskReq(TaskModel task,BuildContext context)async{
   try{
     await _firestore.collection('req').doc(task.doc).get().then((value){
+      final data = value.data() ?? {};
       task.req=ReqDataModel(doc:value.id ,name: value.get('name'), fees: value.get('fees'), total: value.get('total'),
           des: [], item: [], float: value.get('float'), address: value.get('address'),
-          date: value.get('date'), hour: value.get('hour'), phone: value.get('phone'),
+          date: ReqDataModel.normalizeDate(value.get('date')), hour: value.get('hour'), phone: value.get('phone'),
           createby: value.get('createby'),
           deposite: value.get('deposit'), design: value.get('desgin'), notes: value.get('notes'),
           ownerOfevent: value.get('ownerofevent'),
           status: value.get('status'), typeby: value.get('typeCreate'), typeOfBuilding: value.get('typeofbuilding'),
           typeOfEvent: value.get('typeofevent'),
-          branch:value.get("branch") ,typebank: value.get("banktype"));
+          branch:value.get("branch") ,typebank: value.get("banktype"),
+          invoiceNumber: (data['invoiceNumber'] ?? data['invoice_number'] ?? "").toString(),
+          eventName: data['eventName']?.toString() ?? data['event_name']?.toString() ?? "",
+          requestDate: ReqDataModel.normalizeDate(data['requestDate'] ?? data['request_date']),
+          createdAt: ReqDataModel.normalizeDate(data['createdAt']));
       task.req!.orderNumber=value.get('ordernumber');
       task.req!.task=value.get('task');
     });

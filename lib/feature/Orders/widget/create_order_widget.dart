@@ -274,7 +274,7 @@ class _CreateOrderWidget extends State<CreateOrderWidget> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        "#${_req.orderNumber.toString()}",
+                        "#${_req.canonicalOrderNumber()}",
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w800,
@@ -300,7 +300,7 @@ class _CreateOrderWidget extends State<CreateOrderWidget> {
                         'Client Name'.tr: _req.name,
                         'Client Phone'.tr: _req.phone,
                         'Owner Of Event'.tr: _req.ownerOfevent,
-                        'Order Number'.tr: _req.orderNumber.toString(),
+                        'Order Number'.tr: _req.canonicalOrderNumber(),
                         'Job Order Number'.tr: _jobOrderNumber ?? "-",
                       },
                     ),

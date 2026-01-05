@@ -5,11 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../Core/Utils/app_snack.dart';
+import '../../../Core/Utils/manager_fonts.dart';
 import '../../../Core/Widgets/image_view.dart';
 import '../../../models/catalog_item_model.dart';
 import '../../../models/order_model.dart';
+import '../../../models/req_data_model.dart';
 import '../../../models/user_model.dart';
 import '../../AddRequest/widget/add_req_widget.dart';
 import '../../MainScreen/function/main_function.dart';
@@ -34,9 +37,36 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
   late OrderModel _orderModel;
   bool _loading = true;
   bool _deleting = false;
+  bool _isEditing = false;
+  bool _saving = false;
+
+  static final Map<String, String> _creatorNameCache = {};
+  String? _creatorNameOverride;
 
   String hourForm = "AM";
   int hour = 0;
+
+  DateTime? _requestDateValue;
+  DateTime? _dueDateValue;
+
+  late TextEditingController _eventNameCtrl;
+  late TextEditingController _clientNameCtrl;
+  late TextEditingController _clientPhoneCtrl;
+  late TextEditingController _ownerEventCtrl;
+  late TextEditingController _orderNumberCtrl;
+  late TextEditingController _invoiceNumberCtrl;
+  late TextEditingController _requestDateCtrl;
+  late TextEditingController _dueDateCtrl;
+  late TextEditingController _eventTypeCtrl;
+  late TextEditingController _receivingCtrl;
+  late TextEditingController _addressCtrl;
+  late TextEditingController _typeOfBuildingCtrl;
+  late TextEditingController _floatCtrl;
+  late TextEditingController _paymentMethodCtrl;
+  late TextEditingController _statusCtrl;
+  late TextEditingController _totalCtrl;
+  late TextEditingController _depositCtrl;
+  late TextEditingController _feesCtrl;
 
   UserModel userModel = UserModel(
     doc: "doc",
@@ -55,10 +85,35 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
   void initState() {
     super.initState();
     _orderModel = widget.orderModel;
+    _initControllers();
+    _loadCreatorName();
 
     _computeHourFromDocSafe();
     _getUserType();
     _loadStaffAndReqData();
+  }
+
+  @override
+  void dispose() {
+    _eventNameCtrl.dispose();
+    _clientNameCtrl.dispose();
+    _clientPhoneCtrl.dispose();
+    _ownerEventCtrl.dispose();
+    _orderNumberCtrl.dispose();
+    _invoiceNumberCtrl.dispose();
+    _requestDateCtrl.dispose();
+    _dueDateCtrl.dispose();
+    _eventTypeCtrl.dispose();
+    _receivingCtrl.dispose();
+    _addressCtrl.dispose();
+    _typeOfBuildingCtrl.dispose();
+    _floatCtrl.dispose();
+    _paymentMethodCtrl.dispose();
+    _statusCtrl.dispose();
+    _totalCtrl.dispose();
+    _depositCtrl.dispose();
+    _feesCtrl.dispose();
+    super.dispose();
   }
 
   void _safeSet(VoidCallback fn) {
@@ -76,6 +131,305 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     } else {
       Get.back();
     }
+  }
+
+  String _resolveCreatorNameFallback() {
+    final req = _orderModel.req;
+    if (req == null) return "-";
+    final fromReq = (req.createname ?? "").trim();
+    if (fromReq.isNotEmpty) return fromReq;
+    final fromOverride = (_creatorNameOverride ?? "").trim();
+    if (fromOverride.isNotEmpty) return fromOverride;
+    final fromUser = _orderModel.createby?.name ?? "";
+    if (fromUser.trim().isNotEmpty) return fromUser.trim();
+    return "-";
+  }
+
+  String _resolveEventNameDisplay() {
+    final req = _orderModel.req;
+    if (req == null) return "-";
+    final eventName = (req.eventName ?? "").trim();
+    if (eventName.isNotEmpty) return eventName;
+    return _resolveCreatorNameFallback();
+  }
+
+  DateTime? _parseDateValue(dynamic raw) {
+    if (raw == null) return null;
+    if (raw is Timestamp) return raw.toDate();
+    if (raw is DateTime) return raw;
+    if (raw is num) {
+      return DateTime.fromMillisecondsSinceEpoch(raw.toInt());
+    }
+
+    final value = raw.toString().trim();
+    if (value.isEmpty) return null;
+
+    try {
+      return DateTime.parse(value);
+    } catch (_) {}
+
+    for (final fmt in [
+      DateFormat('yyyy/MM/dd'),
+      DateFormat('yyyy-MM-dd'),
+      DateFormat('dd/MM/yyyy'),
+      DateFormat('MM/dd/yyyy'),
+    ]) {
+      try {
+        return fmt.parseLoose(value);
+      } catch (_) {}
+    }
+
+    return null;
+  }
+
+  DateTime? _resolveRequestDateValue() {
+    final req = _orderModel.req;
+    if (req == null) return null;
+
+    final fromField = _parseDateValue(req.requestDate);
+    if (fromField != null) return fromField;
+
+    final fromCreatedAt = _parseDateValue(req.createdAt);
+    if (fromCreatedAt != null) return fromCreatedAt;
+
+    final raw = req.doc;
+    if (raw.contains("Doc")) {
+      final dt = DateTime.tryParse(raw.split("Doc").last);
+      if (dt != null) return dt;
+    }
+
+    return null;
+  }
+
+  String _formatDate(DateTime? value) {
+    if (value == null) return "-";
+    final locale = Get.locale?.languageCode ?? Intl.getCurrentLocale();
+    return DateFormat.yMMMd(locale).format(value);
+  }
+
+  String _formatDateTime(DateTime? value) {
+    if (value == null) return "-";
+    final locale = Get.locale?.languageCode ?? Intl.getCurrentLocale();
+    final date = DateFormat.yMMMd(locale).format(value);
+    final time = DateFormat.jm(locale).format(value);
+    return "$date • $time";
+  }
+
+  String _formatCurrency(String? raw) {
+    final value = double.tryParse((raw ?? "").trim()) ?? 0;
+    final locale = Get.locale?.languageCode ?? Intl.getCurrentLocale();
+    return NumberFormat.currency(locale: locale, symbol: "SAR").format(value);
+  }
+
+  void _initControllers() {
+    final req = _orderModel.req;
+    if (req == null) {
+      _eventNameCtrl = TextEditingController();
+      _clientNameCtrl = TextEditingController();
+      _clientPhoneCtrl = TextEditingController();
+      _ownerEventCtrl = TextEditingController();
+      _orderNumberCtrl = TextEditingController();
+      _invoiceNumberCtrl = TextEditingController();
+      _requestDateCtrl = TextEditingController();
+      _dueDateCtrl = TextEditingController();
+      _eventTypeCtrl = TextEditingController();
+      _receivingCtrl = TextEditingController();
+      _addressCtrl = TextEditingController();
+      _typeOfBuildingCtrl = TextEditingController();
+      _floatCtrl = TextEditingController();
+      _paymentMethodCtrl = TextEditingController();
+      _statusCtrl = TextEditingController();
+      _totalCtrl = TextEditingController();
+      _depositCtrl = TextEditingController();
+      _feesCtrl = TextEditingController();
+      return;
+    }
+
+    _requestDateValue = _resolveRequestDateValue();
+    _dueDateValue = _parseDateValue(req.date);
+
+    final eventName = (req.eventName ?? "").trim();
+    final canonicalOrderNumber = req.canonicalOrderNumber();
+
+    _eventNameCtrl = TextEditingController(text: eventName);
+    _clientNameCtrl = TextEditingController(text: req.name);
+    _clientPhoneCtrl = TextEditingController(text: req.phone);
+    _ownerEventCtrl = TextEditingController(text: req.ownerOfevent);
+    _orderNumberCtrl = TextEditingController(text: canonicalOrderNumber);
+    _invoiceNumberCtrl = TextEditingController(text: canonicalOrderNumber);
+    final requestDateText =
+        _requestDateValue != null ? _formatDateTime(_requestDateValue) : (req.requestDate ?? "-");
+    final dueDateText = _dueDateValue != null ? _formatDate(_dueDateValue) : (req.date.isEmpty ? "-" : req.date);
+
+    _requestDateCtrl = TextEditingController(text: requestDateText);
+    _dueDateCtrl = TextEditingController(text: dueDateText);
+    _eventTypeCtrl = TextEditingController(text: req.typeOfEvent);
+    _receivingCtrl = TextEditingController(text: req.branch);
+    _addressCtrl = TextEditingController(text: req.address);
+    _typeOfBuildingCtrl = TextEditingController(text: req.typeOfBuilding);
+    _floatCtrl = TextEditingController(text: req.float);
+    _paymentMethodCtrl = TextEditingController(text: req.typebank);
+    _statusCtrl = TextEditingController(text: req.status);
+    _totalCtrl = TextEditingController(text: req.total);
+    _depositCtrl = TextEditingController(text: req.deposite);
+    _feesCtrl = TextEditingController(text: req.fees);
+  }
+
+  void _syncControllersFromModel() {
+    if (_isEditing) return;
+    final req = _orderModel.req;
+    if (req == null) return;
+
+    _requestDateValue = _resolveRequestDateValue();
+    _dueDateValue = _parseDateValue(req.date);
+
+    final eventName = (req.eventName ?? "").trim();
+    final canonicalOrderNumber = req.canonicalOrderNumber();
+
+    _eventNameCtrl.text = eventName;
+    _clientNameCtrl.text = req.name;
+    _clientPhoneCtrl.text = req.phone;
+    _ownerEventCtrl.text = req.ownerOfevent;
+    _orderNumberCtrl.text = canonicalOrderNumber;
+    _invoiceNumberCtrl.text = canonicalOrderNumber;
+    _requestDateCtrl.text =
+        _requestDateValue != null ? _formatDateTime(_requestDateValue) : (req.requestDate ?? "-");
+    _dueDateCtrl.text = _dueDateValue != null ? _formatDate(_dueDateValue) : (req.date.isEmpty ? "-" : req.date);
+    _eventTypeCtrl.text = req.typeOfEvent;
+    _receivingCtrl.text = req.branch;
+    _addressCtrl.text = req.address;
+    _typeOfBuildingCtrl.text = req.typeOfBuilding;
+    _floatCtrl.text = req.float;
+    _paymentMethodCtrl.text = req.typebank;
+    _statusCtrl.text = req.status;
+    _totalCtrl.text = req.total;
+    _depositCtrl.text = req.deposite;
+    _feesCtrl.text = req.fees;
+  }
+
+  Future<void> _loadCreatorName() async {
+    final req = _orderModel.req;
+    if (req == null) return;
+    final uid = req.createby.trim();
+    if (uid.isEmpty) return;
+    if ((req.createname ?? "").trim().isNotEmpty) return;
+
+    final cached = _creatorNameCache[uid];
+    if (cached != null && cached.trim().isNotEmpty) {
+      _safeSet(() => _creatorNameOverride = cached);
+      return;
+    }
+
+    try {
+      final doc = await _firestore.collection('user').doc(uid).get();
+      final data = doc.data() ?? {};
+      final name = (data['name'] ?? '').toString().trim();
+      if (name.isEmpty) return;
+      _creatorNameCache[uid] = name;
+      _safeSet(() => _creatorNameOverride = name);
+    } catch (_) {}
+  }
+
+  Future<void> _pickDate({
+    required TextEditingController controller,
+    required DateTime? current,
+    required ValueChanged<DateTime> onPicked,
+  }) async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: current ?? now,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      locale: Get.locale,
+    );
+
+    if (picked == null) return;
+    onPicked(picked);
+    controller.text = _formatDate(picked);
+  }
+
+  Future<void> _saveEdits() async {
+    if (_saving) return;
+
+    final req = _orderModel.req;
+    if (req == null) return;
+
+    final reqDocId = req.doc.trim();
+    if (reqDocId.isEmpty) {
+      showAppSnack("update_failed".tr, error: true);
+      return;
+    }
+
+    _safeSet(() => _saving = true);
+
+    final requestDateValue = _requestDateValue?.toIso8601String() ?? _requestDateCtrl.text.trim();
+    final dueDateValue = _dueDateValue?.toIso8601String() ?? _dueDateCtrl.text.trim();
+    final orderNumberInput = _orderNumberCtrl.text.trim();
+    final invoiceNumberInput = _invoiceNumberCtrl.text.trim();
+    final canonicalInput = invoiceNumberInput.isNotEmpty ? invoiceNumberInput : orderNumberInput;
+    final canonicalNumber = ReqDataModel.formatOrderNumber(canonicalInput);
+
+    final updates = <String, dynamic>{
+      'eventName': _eventNameCtrl.text.trim(),
+      'name': _clientNameCtrl.text.trim(),
+      'phone': _clientPhoneCtrl.text.trim(),
+      'ownerofevent': _ownerEventCtrl.text.trim(),
+      'orderNumber': canonicalNumber,
+      'ordernumber': canonicalNumber,
+      'invoiceNumber': canonicalNumber,
+      'requestDate': requestDateValue,
+      'date': dueDateValue,
+      'branch': _receivingCtrl.text.trim(),
+      'address': _addressCtrl.text.trim(),
+      'typeofbuilding': _typeOfBuildingCtrl.text.trim(),
+      'float': _floatCtrl.text.trim(),
+      'typeofevent': _eventTypeCtrl.text.trim(),
+      'banktype': _paymentMethodCtrl.text.trim(),
+      'status': _statusCtrl.text.trim(),
+      'total': _totalCtrl.text.trim(),
+      'deposite': _depositCtrl.text.trim(),
+      'deposit': _depositCtrl.text.trim(),
+      'fees': _feesCtrl.text.trim(),
+    };
+
+    final ok = await UpdateOrderDetails(reqDocId: reqDocId, data: updates);
+
+    if (ok) {
+      _safeSet(() {
+        req.eventName = _eventNameCtrl.text.trim();
+        req.name = _clientNameCtrl.text.trim();
+        req.phone = _clientPhoneCtrl.text.trim();
+        req.ownerOfevent = _ownerEventCtrl.text.trim();
+        req.orderNumber = canonicalNumber;
+        req.invoiceNumber = canonicalNumber;
+        req.requestDate = requestDateValue;
+        req.date = dueDateValue;
+        req.branch = _receivingCtrl.text.trim();
+        req.address = _addressCtrl.text.trim();
+        req.typeOfBuilding = _typeOfBuildingCtrl.text.trim();
+        req.float = _floatCtrl.text.trim();
+        req.typeOfEvent = _eventTypeCtrl.text.trim();
+        req.typebank = _paymentMethodCtrl.text.trim();
+        req.status = _statusCtrl.text.trim();
+        req.total = _totalCtrl.text.trim();
+        req.deposite = _depositCtrl.text.trim();
+        req.fees = _feesCtrl.text.trim();
+        _orderNumberCtrl.text = canonicalNumber;
+        _invoiceNumberCtrl.text = canonicalNumber;
+        _isEditing = false;
+      });
+      showAppSnack("update_success".tr);
+    } else {
+      showAppSnack("update_failed".tr, error: true);
+    }
+
+    _safeSet(() => _saving = false);
+  }
+
+  void _cancelEdits() {
+    _syncControllersFromModel();
+    _safeSet(() => _isEditing = false);
   }
 
   Future<String?> _resolveItemDocId(CatalogItemModel item) async {
@@ -215,6 +569,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
         _orderModel = orderModel;
         _loading = false;
       });
+      _syncControllersFromModel();
+      _loadCreatorName();
     } catch (_) {
       _safeSet(() => _loading = false);
       showAppSnack("حدث خطأ أثناء تحميل بيانات الطلب".tr, error: true);
@@ -237,6 +593,9 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
 
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final canonicalOrderNumber = req.canonicalOrderNumber();
+    final invoiceDisplay = canonicalOrderNumber.trim().isEmpty ? "-" : canonicalOrderNumber;
+    final dueDateDisplay = _safeDueDateText(req.date);
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -291,47 +650,171 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
               _buildHeaderSummary(context),
               SizedBox(height: screenHeight * 0.015),
 
-              _buildInfoCard(
-                context,
-                title: "Client & Request Details".tr,
-                icon: Icons.person,
-                data: {
-                  'Request Date'.tr: _safeReqDateText(),
-                  'Client Name'.tr: req.name,
-                  'Client Phone'.tr: req.phone,
-                  'Owner Of Event'.tr: req.ownerOfevent,
-                  'Order Number'.tr: (req.orderNumber ?? "").toString(),
-                  'Job Order Number'.tr: (req.task == "order"
-                      ? ((req as dynamic).jobOrderNumber?.toString() ?? "-")
-                      : "-"),
-                },
-              ),
+              _buildEditActions(context),
               SizedBox(height: screenHeight * 0.015),
 
-              _buildInfoCard(
-                context,
-                title: "Event & Location".tr,
-                icon: Icons.location_on,
-                data: {
-                  'Event Type'.tr: req.typeOfEvent,
-                  'Event Owner'.tr: req.ownerOfevent,
-                  'Receiving'.tr: req.branch,
-                  'Address'.tr: "${req.address} - ${req.typeOfBuilding} - ${req.float}",
-                },
-              ),
+              _isEditing
+                  ? _buildEditableCard(
+                      context,
+                      title: "client_request_details".tr,
+                      icon: Icons.person,
+                      children: [
+                        _buildEditableRow(
+                          label: "request_date".tr,
+                          controller: _requestDateCtrl,
+                          readOnly: true,
+                          onTap: () => _pickDate(
+                            controller: _requestDateCtrl,
+                            current: _requestDateValue,
+                            onPicked: (v) => _requestDateValue = v,
+                          ),
+                        ),
+                        _buildEditableRow(
+                          label: "event_name".tr,
+                          controller: _eventNameCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "client_actual".tr,
+                          controller: _clientNameCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "client_phone".tr,
+                          controller: _clientPhoneCtrl,
+                          keyboardType: TextInputType.phone,
+                        ),
+                        _buildEditableRow(
+                          label: "owner_of_event".tr,
+                          controller: _ownerEventCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "order_number".tr,
+                          controller: _orderNumberCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "invoice_number".tr,
+                          controller: _invoiceNumberCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "status".tr,
+                          controller: _statusCtrl,
+                        ),
+                      ],
+                    )
+                  : _buildInfoCard(
+                      context,
+                      title: "client_request_details".tr,
+                      icon: Icons.person,
+                      data: {
+                        'request_date'.tr: _safeReqDateText(),
+                        'event_name'.tr: _resolveEventNameDisplay(),
+                        'client_actual'.tr: req.name,
+                        'client_phone'.tr: req.phone,
+                        'owner_of_event'.tr: req.ownerOfevent,
+                        'order_number'.tr: invoiceDisplay,
+                        'invoice_number'.tr: invoiceDisplay,
+                        'status'.tr: req.status,
+                      },
+                    ),
               SizedBox(height: screenHeight * 0.015),
 
-              _buildInfoCard(
-                context,
-                title: "Payment Summary".tr,
-                icon: Icons.payments,
-                data: {
-                  'Payment Method'.tr: req.typebank,
-                  'Total Price'.tr: "${req.total} SAR",
-                  'Deposit'.tr: "${req.deposite} SAR",
-                  'Remaining Fees'.tr: "${req.fees} SAR",
-                },
-              ),
+              _isEditing
+                  ? _buildEditableCard(
+                      context,
+                      title: "event_location".tr,
+                      icon: Icons.location_on,
+                      children: [
+                        _buildEditableRow(
+                          label: "Event Type".tr,
+                          controller: _eventTypeCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "owner_of_event".tr,
+                          controller: _ownerEventCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "receiving".tr,
+                          controller: _receivingCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "due_date".tr,
+                          controller: _dueDateCtrl,
+                          readOnly: true,
+                          onTap: () => _pickDate(
+                            controller: _dueDateCtrl,
+                            current: _dueDateValue,
+                            onPicked: (v) => _dueDateValue = v,
+                          ),
+                        ),
+                        _buildEditableRow(
+                          label: "address".tr,
+                          controller: _addressCtrl,
+                          maxLines: 2,
+                        ),
+                        _buildEditableRow(
+                          label: "Type Of Building".tr,
+                          controller: _typeOfBuildingCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "Float".tr,
+                          controller: _floatCtrl,
+                          keyboardType: TextInputType.number,
+                        ),
+                      ],
+                    )
+                  : _buildInfoCard(
+                      context,
+                      title: "event_location".tr,
+                      icon: Icons.location_on,
+                      data: {
+                        'Event Type'.tr: req.typeOfEvent,
+                        'owner_of_event'.tr: req.ownerOfevent,
+                        'receiving'.tr: req.branch,
+                        'due_date'.tr: dueDateDisplay,
+                        'address'.tr: req.address,
+                        'Type Of Building'.tr: req.typeOfBuilding,
+                        'Float'.tr: req.float,
+                      },
+                    ),
+              SizedBox(height: screenHeight * 0.015),
+
+              _isEditing
+                  ? _buildEditableCard(
+                      context,
+                      title: "payment_summary".tr,
+                      icon: Icons.payments,
+                      children: [
+                        _buildEditableRow(
+                          label: "payment_method".tr,
+                          controller: _paymentMethodCtrl,
+                        ),
+                        _buildEditableRow(
+                          label: "Total Price".tr,
+                          controller: _totalCtrl,
+                          keyboardType: TextInputType.number,
+                        ),
+                        _buildEditableRow(
+                          label: "Deposit".tr,
+                          controller: _depositCtrl,
+                          keyboardType: TextInputType.number,
+                        ),
+                        _buildEditableRow(
+                          label: "Remaining Fees".tr,
+                          controller: _feesCtrl,
+                          keyboardType: TextInputType.number,
+                        ),
+                      ],
+                    )
+                  : _buildInfoCard(
+                      context,
+                      title: "payment_summary".tr,
+                      icon: Icons.payments,
+                      data: {
+                        'payment_method'.tr: req.typebank,
+                        'Total Price'.tr: _formatCurrency(req.total),
+                        'Deposit'.tr: _formatCurrency(req.deposite),
+                        'Remaining Fees'.tr: _formatCurrency(req.fees),
+                      },
+                    ),
               SizedBox(height: screenHeight * 0.015),
 
               if (_orderModel.Coordinator != null) _buildStaffCard(context),
@@ -381,7 +864,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
         ),
       ),
 
-      floatingActionButton: (userModel.type == "Admin" && !_loading)
+      floatingActionButton: (userModel.type == "Admin" && !_loading && !_isEditing)
           ? FloatingActionButton(
         onPressed: () {
           Get.bottomSheet(
@@ -399,6 +882,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
   Widget _buildHeaderSummary(BuildContext context) {
     final req = _orderModel.req!;
     final screenWidth = MediaQuery.of(context).size.width;
+    final headerTitle = req.displayTitleName(fallback: "no_name".tr);
 
     return Container(
       padding: const EdgeInsets.all(14),
@@ -430,14 +914,14 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  req.typeOfEvent,
+                  headerTitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: screenWidth * 0.045, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  "${"Branch".tr}: ${req.branch} • ${"Payment Method".tr}: ${req.typebank}",
+                  "${"receiving".tr}: ${req.branch} • ${"payment_method".tr}: ${req.typebank}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.grey[600]),
@@ -451,16 +935,20 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
   }
 
   String _safeReqDateText() {
-    try {
-      final raw = _orderModel.req!.doc;
-      if (!raw.contains("Doc")) return "-";
-      final dt = DateTime.tryParse(raw.split("Doc").last);
-      if (dt == null) return "-";
-      final h = hour == 0 ? dt.hour : hour;
-      return "${dt.year}/${dt.month}/${dt.day}\n $h $hourForm";
-    } catch (_) {
-      return "-";
+    final value = _requestDateValue ?? _resolveRequestDateValue();
+    if (value != null) return _formatDateTime(value);
+    final raw = _orderModel.req?.requestDate ?? "";
+    if (raw.trim().isEmpty) {
+      final created = _orderModel.req?.createdAt ?? "";
+      return created.trim().isEmpty ? "-" : created.trim();
     }
+    return raw.trim().isEmpty ? "-" : raw.trim();
+  }
+
+  String _safeDueDateText(String raw) {
+    final parsed = _parseDateValue(raw);
+    if (parsed != null) return _formatDate(parsed);
+    return raw.trim().isEmpty ? "-" : raw.trim();
   }
 
   Widget _buildStaffCard(BuildContext context) {
@@ -531,6 +1019,185 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildEditableCard(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required List<Widget> children,
+  }) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.grey.withOpacity(0.15)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 10,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: const Color(0xFFCE232B)),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.048,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFFCE232B),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Divider(color: Colors.grey.withOpacity(0.2), height: 1),
+            const SizedBox(height: 10),
+            ...children,
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEditableRow({
+    required String label,
+    required TextEditingController controller,
+    TextInputType keyboardType = TextInputType.text,
+    int maxLines = 1,
+    bool readOnly = false,
+    VoidCallback? onTap,
+  }) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: screenWidth * 0.38,
+            child: Text(
+              "$label:",
+              style: TextStyle(
+                fontSize: screenWidth * 0.038,
+                fontWeight: FontWeight.w700,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+          Expanded(
+            child: TextFormField(
+              controller: controller,
+              keyboardType: keyboardType,
+              maxLines: maxLines,
+              readOnly: readOnly,
+              onTap: onTap,
+              textAlign: TextAlign.end,
+              decoration: InputDecoration(
+                isDense: true,
+                filled: true,
+                fillColor: Colors.grey[100],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEditActions(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    if (!_isEditing) {
+      return SizedBox(
+        width: double.infinity,
+        height: screenWidth * 0.12,
+        child: ElevatedButton.icon(
+          onPressed: _loading ? null : () => _safeSet(() => _isEditing = true),
+          icon: const Icon(Icons.edit_outlined, color: Colors.white),
+          label: Text(
+            "edit".tr,
+            style: TextStyle(
+              fontSize: screenWidth * 0.04,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF07933E),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            elevation: 3,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+          ),
+        ),
+      );
+    }
+
+    return Row(
+      children: [
+        Expanded(
+          child: SizedBox(
+            height: screenWidth * 0.12,
+            child: ElevatedButton(
+              onPressed: (_saving || _loading) ? null : _saveEdits,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF07933E),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              ),
+              child: _saving
+                  ?  SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text("save".tr,style: TextStyle(
+                color: Colors.white,
+                fontFamily: ManagerFontFamily.fontFamily
+
+              ),),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: SizedBox(
+            height: screenWidth * 0.12,
+            child: OutlinedButton(
+              onPressed: (_saving || _loading) ? null : _cancelEdits,
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFFCE232B)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              ),
+              child: Text(
+                "cancel".tr,
+                style: const TextStyle(color: Color(0xFFCE232B)),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -640,7 +1307,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         ),
                       ),
                       DataCell(Text(
-                        "${item.price} SAR",
+                        _formatCurrency(item.price),
                         style: const TextStyle(color: Color(0xFF07933E), fontWeight: FontWeight.w600),
                       )),
                       DataCell(Text(
@@ -648,7 +1315,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         style: const TextStyle(color: Color(0xFF07933E), fontWeight: FontWeight.w600),
                       )),
                       DataCell(Text(
-                        "${total.toStringAsFixed(2)} SAR",
+                        _formatCurrency(total.toStringAsFixed(2)),
                         style: const TextStyle(color: Color(0xFF07933E), fontWeight: FontWeight.w600),
                       )),
                       DataCell(

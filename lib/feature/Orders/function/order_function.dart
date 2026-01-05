@@ -88,6 +88,21 @@ Future<String?> createJobOrder({
 
     final reqSnap = await reqRef.get();
     final reqData = reqSnap.data() ?? {};
+    String _resolveInvoiceNumber() {
+      final candidates = [
+        _s(reqData['invoiceNumber']),
+        _s(reqData['invoice_number']),
+        _s(reqData['orderNumber']),
+        _s(reqData['ordernumber']),
+        _s(req.invoiceNumber),
+        _s(req.orderNumber),
+      ];
+      for (final c in candidates) {
+        final trimmed = c.trim();
+        if (trimmed.isNotEmpty) return trimmed;
+      }
+      return "";
+    }
 
     final existingJobOrderNumber = _s(reqData['jobOrderNumber']).trim();
     if (existingJobOrderNumber.isNotEmpty) {
@@ -113,6 +128,10 @@ Future<String?> createJobOrder({
 
     final int seq = await _getNextJobOrderNumber();
     final String jobOrderNumber = seq.toString().padLeft(6, '0');
+    final String orderNumber = _resolveInvoiceNumber();
+    final String notifyNumber = ReqDataModel.formatOrderNumber(
+      orderNumber.isNotEmpty ? orderNumber : jobOrderNumber,
+    );
 
     await jopRef.set({
       'Coordinator': coordinator.doc,
@@ -168,17 +187,17 @@ Future<String?> createJobOrder({
       await sendNotification(
         entry.key,
         "New Job Order",
-        "تم إنشاء أمر تشغيل رقم: $jobOrderNumber",
+        "تم إنشاء أمر تشغيل رقم: $notifyNumber",
         "5",
         userDocId: entry.value,
         dataExtras: {
-          'jobOrderNumber': jobOrderNumber,
+          'invoiceNumber': notifyNumber,
           'reqDoc': reqDocId,
         },
       );
     }
 
-    _safeSnack(context, "تم إنشاء أمر التشغيل رقم $jobOrderNumber");
+    _safeSnack(context, "تم إنشاء أمر التشغيل رقم $notifyNumber");
     return jobOrderNumber;
   } catch (e) {
     showErrorDialog(context, e.toString());
@@ -352,5 +371,22 @@ Future<void> UpdateStaffOrder(
     _safeSnack(context, "تم تحديث الموظفين بنجاح");
   } catch (e) {
     _safeSnack(context, "حدث خطأ أثناء التحديث", isError: true);
+  }
+}
+
+Future<bool> UpdateOrderDetails({
+  required String reqDocId,
+  required Map<String, dynamic> data,
+}) async {
+  final trimmed = reqDocId.trim();
+  if (trimmed.isEmpty) return false;
+
+  try {
+    final payload = Map<String, dynamic>.from(data);
+    payload['updatedAt'] = FieldValue.serverTimestamp();
+    await _firestore.collection('req').doc(trimmed).update(payload);
+    return true;
+  } catch (_) {
+    return false;
   }
 }

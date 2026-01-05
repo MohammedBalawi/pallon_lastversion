@@ -47,3 +47,4 @@ app.*.map.json
 # Secrets / service accounts
 lib/Core/Utils/assets/Images/*firebase-adminsdk*.json
 lib/Core/Utils/assets/Images/*-49c98-*.json
+.vercel

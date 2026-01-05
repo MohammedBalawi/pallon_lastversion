@@ -1,148 +1,355 @@
 {
-"Search in Waseelati...": "ابحث في وسيلتي....",
-  "Failed to load image": "فشل في تحميل الصورة",
-  "Discover our departments": "اكتشف اقسامنا",
-  "Cars and Vehicles": "السيارات و المركبات",
-  "Real Estate": "العقارات",
-  "Electronics": "الكترونيات",
-  "Jobs": "وظائف",
-  "Services and Equipment": "الخدمات و المعدات",
-  "Furniture": "اثاث",
-  "Fashion, Beauty & Kids": "الموضة و الجمال و الاطفال",
-  "Contracting": "مقاولات",
-  "more": "المزيد",
-  "Complete Request": "إكمال الطلب",
-  "Catalog": "الكتالوج",
-  "Store": "المخزن",
-  "Manual": "يدوي",
-  "Selected Items": "العناصر المختارة",
-  "Add Special Design": "إضافة تصميم خاص",
-  "Notes": "ملاحظات",
-  "Request Notes": "ملاحظات الطلب",
-  "Deposit": "العربون",
-  "Deposit Amount": "قيمة العربون",
-  "Bank": "طريقة الدفع",
-  "Receiving": "طريقة الاستلام",
-  "Address is required": "العنوان مطلوب",
-  "Floor Number": "رقم الطابق",
-  "Click the picture": "انقر فوق الصورة",
-  "Floor number is required": "رقم الطابق مطلوب",
-  "Building Type": "نوع المبنى",
-  "Building type is required": "نوع المبنى مطلوب",
-  "Select From Catalog": "اختيار من الكتالوج",
-  "Select From Store": "اختيار من المخزن",
-  "Add Manual Item": "إضافة صنف يدوي",
-  "Select Catalog": "اختر الكتالوج",
-  "Select Sub-Category": "اختر القسم الفرعي",
-  "Select Sub-Sub-Category": "اختر القسم الفرعي الثاني",
-  "Select Sub3": "اختر القسم الثالث",
-  "Select Sub4": "اختر القسم الرابع",
-  "Select Item": "اختر الصنف",
-  "No items in this section": "لا يوجد عناصر في هذا القسم",
-  "No items added yet": "لا يوجد عناصر مضافة بعد",
-  "Upload Images": "رفع الصور",
-  "Item Name": "اسم الصنف",
-  "Price": "السعر",
-  "Quantity": "الكمية",
-  "Select Image": "اختر صورة",
-  "Add Item": "إضافة صنف",
-  "Add Store Item": "إضافة صنف من المخزن",
-  "Name": "الاسم",
-  "Image": "الصورة",
-  "Count": "العدد",
-  "Total": "الإجمالي",
-  "Action": "إجراء",
-  "No store items available": "لا يوجد أصناف في المخزن",
-  "Please fill name & price": "يرجى إدخال الاسم والسعر",
-  "You entered a deposit greater than the total amount":
-  "لقد قمت بإدخال مبلغ مقدم أكبر من المجموع",
-  "Please Select Bank": "الرجاء اختيار طريقة الدفع",
-  "Please Select Branch": "الرجاء اختيار طريقة الاستلام",
-  "Please Select Items": "الرجاء اختيار العناصر",
-  "price:": "السعر:",
-  "Home": "الرئيسية",
-  "My Account": "حسابي",
-  "Add your ad": "اضف اعلانك",
-  "My ads": "اعلاناتي",
-  "commercial": "تجاري",
-  "Search in": "ابحث في",
-  "Similar ads": "اعلانات مشابهة",
-  "Information": "المعلومات",
-  "call": "اتصل",
-  "Map": "الخريطة",
-  "Description": "الوصف",
-  "Contact the advertiser": "تواصل مع المعلن",
-  "Request the advertiser's number": "اطلب رقم المعلن",
-  "Warning: Additional charges may apply. Please check with the advertiser for details.": "تنبيه: قد تكون هناك رسوم إضافية. يرجى التحقق من التفاصيل مع المعلن.",
-  "See ad details": "شاهد تفاصيل الاعلان",
-  "Account management": "ادارة الحساب",
-  "Your opinion matters to us. Share your opinion with us.": "رايك يهمنا شاركنا رايك",
-  "Sales department": "قسم المبيعات",
-  "Call US": "اتصل بنا",
-  "Settings": "الاعدادات",
-  "Add a suggestion": "اضف اقتراح",
-  "privacy policy": "سياسة الخصوصية",
-  "terms of use": "شروط الاستخدام",
-  "Logout": "تسجيل الخروج",
-  "Edit Account": "تعديل الحساب",
-  "Full Name": "الاسم بالكامل",
-  "Information Account": "معلومات الحساب",
-  "Enter Full Name": "ادخل الاسم بالكامل",
-  "Please enter your full name": "برجاء ادخال الاسم بالكامل",
-  "Email": "البريد الالكتروني",
-  "Enter Email": "ادخل البريد الالكتروني",
-  "Please enter your email": "برجاء ادخال البريد الالكتروني",
-  "Please enter a valid email address": "برجاء ادخال بريد الكتروني صحيح",
-  "Phone Number": "رقم الموبايل",
-  "Gender": "الجنس",
-  "Male": "ذكر",
-  "Female": "انثي",
-  "Please select your gender": "برجاء اختيار الجنس",
-  "BirthDate": "تاريخ الميلاد",
-  "Enter BirthDate": "ادخل تاريخ الميلاد",
-  "Please enter your birth date": "برجاء اخال تاريخ الميلاد",
-  "Account Type": "نوع الحساب",
-  "Personal use": "إستعمال شخصي",
-  "For non-commercial use, suitable for individuals wishing to buy and sell some personal items.": "للإستخدام غير التجاري، مناسب للأفراد الراغبين في بيع وشراء بعض المقتنيات الشخصية.",
-  "Save Data": "حفظ البيانات",
-  "We are here to help you. Contact us via any of the following methods:": "نحن هنا لمساعدتك تواصل معنا عبر أي من الطرق التالية",
-  "For general inquiries": "للاستفسارات العامة",
-  "Dail": "الاتصال الهاتفي",
-  "Available from Sunday to Thursday from 9 am to 5 pm": "متاح من الأحد للخميس من الساعة 9 صباحاً حتى 5 مساء",
-  "Send your message to us": "ارسل رسالتك الينا",
-  "Please Enter Your Phone Number": "برجاء ادخال رقم هاتفك",
-  "message": "الرسالة",
-  "Enter Your Message": "ادخل رسالتك",
-  "Please Enter Your Message": "برجاء ادخال رسالتك",
-  "Send Message": "ارسال الرسالة",
-  "Setting App": "اعدادات التطبيق",
-  "Choose the language": "اختار اللغة",
-  "English": "الانجليزية",
-  "Click here to Choose": "اضغط هنا للاختيار",
-  "Arabic": "العربية",
-  "Add New Ads": "اضافة اعلان جديد",
-  "Please Choose Category": "برجاء اختيار القسم",
-  "Login Or Create Account": "تسجيل الدخول او انشاء حساب",
-  "Next": "التالي",
-  "By using Wasilati application, you agree to the Terms of Use and Privacy Policy.": "باستخدامك لتطبيق وسيلتي انت توافق على اتفاقية الاستخدام و سياسة الخصوصية",
-  "Confirm Phone Number": "تاكيد رقم الهاتف",
-  "Please enter the verification code sent to your phone.": "الرجاء إدخال رمز التحقق الذي تم إرساله إلى هاتفك",
-  "verification code": "رمز التحقق",
-  "Confirm": "تاكيد",
-  "Choose From Sub Category": "اختار القسم الفرعي",
-  "Add New Ads to": "اضافة اعلان جديد الي",
-  "Tap to add photos": "اضغط لاضافة صور",
-  "Title": "اسم الاعلان",
-  "Please enter a title": "برجاء اضافة اسم للاعلان",
-  "Please enter the price": "برجاء ادخال السعر",
-  "Details": "التفاصيل",
-  "Please enter some details": "برجاء ادخال التفاصيل",
-  "Address": "العنوان",
-  "Please enter an address": "برجاء ادخال العنوان",
-  "City": "المدينة",
-  "Submit Ad": "نشر الاعلان",
-  "Your Ads": "اعلاناتك",
-  "Commercial Products": "الاعلانات التجارية",
-  "About US": "من نحن",
-  "Service advertisements": "الخدمات الاعلانية"
+  "Perview": "ÙØ¹Ø§ÙÙØ© ÙØ§Ø¬ÙØ© Ø§ÙÙØ³ØªØ®Ø¯Ù",
+  "Add Special Design": "Ø¥Ø¶Ø§ÙØ© ØªØµÙÙÙ Ø®Ø§Øµ",
+  "Add Manual Item": "Ø¥Ø¶Ø§ÙØ© Ø¹ÙØµØ± ÙØ¯ÙÙ",
+  "Select Image": "Ø­Ø¯Ø¯ Ø§ÙØµÙØ±Ø©",
+  "Item Name": "Ø§Ø³Ù Ø§ÙØ¹ÙØµØ±",
+  "Store": "Ø§ÙÙØ®Ø²Ù",
+  "Add Store Item": "Ø¥Ø¶Ø§ÙØ© Ø¹ÙØµØ± Ø§ÙÙØªØ¬Ø±",
+  "Select Store Item": "Ø­Ø¯Ø¯ Ø¹ÙØµØ± Ø§ÙÙØªØ¬Ø±",
+  "Quantity": "Ø§ÙÙÙÙØ©",
+  "Manual": "ÙØ¯ÙÙ",
+  "Select Date": "Ø­Ø¯Ø¯ Ø§ÙØªØ§Ø±ÙØ®",
+  "Select Time": "Ø­Ø¯Ø¯ Ø§ÙÙÙØª",
+  "Search user by name or email": "Ø§ÙØ¨Ø­Ø« Ø¹Ù Ø§ÙÙØ³ØªØ®Ø¯Ù Ø­Ø³Ø¨ Ø§ÙØ§Ø³Ù Ø£Ù Ø§ÙØ¨Ø±ÙØ¯ Ø§ÙØ¥ÙÙØªØ±ÙÙÙ",
+  "Select Role": "Ø­Ø¯Ø¯ Ø§ÙØ¯ÙØ±",
+  "Submit": "ØªØ³ÙÙÙ",
+  "Please Choose Action": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø§Ø®ØªÙØ§Ø± Ø§ÙØ¥Ø¬Ø±Ø§Ø¡",
+  "Add New Sub": "Ø¥Ø¶Ø§ÙØ© ÙØ±Ø¹ÙØ© Ø¬Ø¯ÙØ¯Ø©",
+  "Choose Action": "Ø§Ø®ØªØ± Ø§ÙØ¥Ø¬Ø±Ø§Ø¡",
+  "Please Select Items": "Ø§ÙØ±Ø¬Ø§Ø¡ ØªØ­Ø¯ÙØ¯ Ø§ÙØ¹ÙØ§ØµØ±",
+  "Please Select Branch": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø§Ø®ØªÙØ§Ø± Ø§ÙÙØ±Ø¹",
+  "Please Select Bank": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø§Ø®ØªÙØ§Ø± Ø§ÙØ¨ÙÙ",
+  "Please Enter Description": "Ø¨Ø±Ø¬Ø§Ø¡ Ø§Ø¯Ø®Ø§Ù Ø§ÙÙØµÙ",
+  "Please insert image": "Ø¨Ø±Ø¬Ø§Ø¡ Ø§Ø¯Ø®Ø§Ù ØµÙØ±Ø©",
+  "Status": "Ø­Ø§ÙØ©",
+  "Created By": "ØªÙ Ø§ÙØ¥ÙØ´Ø§Ø¡ Ø¨ÙØ§Ø³Ø·Ø©",
+  "Type Of Building": "ÙÙØ¹ Ø§ÙÙØ¨ÙÙ",
+  "Phone": "ÙØ§ØªÙ",
+  "client": "Ø¹ÙÙÙ",
+  "Time": "ÙÙØª",
+  "remove": "Ø®Ø±ÙØ¬",
+  "add": "Ø§Ø¶Ø§ÙØ©",
+  "Report": "ØªÙØ§Ø±ÙØ±",
+  "Client": "Ø¹ÙÙÙ",
+  "All": "Ø§ÙÙÙ",
+  "InReview": "ØªØ­Øª Ø§ÙÙØ±Ø§Ø¬Ø¹Ø©",
+  "Progress": "ØªØ­Øª Ø§ÙØªÙÙÙØ°",
+  "The Store": "Ø§ÙÙØ®Ø²Ù",
+  "User": "Ø§ÙÙØ³ØªØ®Ø¯Ù",
+  "Tasks for": "Ø§ÙÙÙØ§Ù Ù",
+  "January": "ÙÙØ§ÙØ±",
+  "February": "ÙØ¨Ø±Ø§ÙØ±",
+  "March": "ÙØ§Ø±Ø³",
+  "April": "Ø£Ø¨Ø±ÙÙ",
+  "May": "ÙØ§ÙÙ",
+  "June": "ÙÙÙÙÙ",
+  "July": "ÙÙÙÙÙ",
+  "August": "Ø£ØºØ³Ø·Ø³",
+  "September": "Ø³Ø¨ØªÙØ¨Ø±",
+  "October": "Ø£ÙØªÙØ¨Ø±",
+  "November": "ÙÙÙÙØ¨Ø±",
+  "December": "Ø¯ÙØ³ÙØ¨Ø±",
+  "Price Buy": "Ø³Ø¹Ø± Ø§ÙØ´Ø±Ø§Ø¡",
+  "Admin": "ÙØ³Ø¤ÙÙ",
+  "vendor": "ÙØ¯ÙØ± ÙØ®Ø²Ù",
+  "driver": "Ø³Ø§Ø¦Ù",
+  "designer": "ÙØµÙÙ",
+  "coordinator": "ÙÙØ¸Ù",
+  "TUE": "Ø§ÙØ«ÙØ§Ø«Ø§Ø¡",
+  "SUN": "Ø§ÙØ§Ø­Ø¯",
+  "SAT": "Ø§ÙØ³Ø¨Øª",
+  "MON": "Ø§ÙØ§Ø«ÙÙÙ",
+  "WED": "Ø§ÙØ§Ø±Ø¨Ø¹Ø§Ø¡",
+  "THU": "Ø§ÙØ®ÙÙØ³",
+  "FRI": "Ø§ÙØ¬ÙØ¹Ø©",
+  "Error": "Ø®Ø·Ø£",
+  "OK": "ÙÙØ§ÙÙ",
+  "Accept": "ÙØ¨ÙÙ",
+  "Reject": "Ø±ÙØ¶",
+  "Jop Order": "Ø·ÙØ¨ Ø¹ÙÙ",
+  "Message": "Ø±Ø³Ø§ÙØ©",
+  "Comment": "ØªØ¹ÙÙÙ",
+  "Enter Your Comment": "Ø£Ø¯Ø®Ù ØªØ¹ÙÙÙÙ",
+  "Please Enter Comment": "ÙØ±Ø¬Ù Ø¥Ø¯Ø®Ø§Ù ØªØ¹ÙÙÙ",
+  "Add Comment": "Ø¥Ø¶Ø§ÙØ© ØªØ¹ÙÙÙ",
+  "No Comments": "ÙØ§ ØªÙØ¬Ø¯ ØªØ¹ÙÙÙØ§Øª",
+  "Design Task": "ÙÙÙØ© Ø§ÙØªØµÙÙÙ",
+  "Finish Task": "Ø¥ÙÙØ§Ø¡ Ø§ÙÙÙÙØ©",
+  "Current Opretian": "Ø§ÙØ¹ÙÙÙØ© Ø§ÙØ­Ø§ÙÙØ©",
+  "Desgin": "ØªØµÙÙÙ",
+  "Due date": "ØªØ§Ø±ÙØ® Ø§ÙØ§Ø³ØªØ­ÙØ§Ù",
+  "Please select an item and quantity.": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± Ø¹ÙØµØ± ÙØ§ÙÙÙÙØ©.",
+  "Vendor Task": "ÙÙÙØ© Ø§ÙØ¨Ø§Ø¦Ø¹",
+  "Choose an item": "Ø§Ø®ØªØ± Ø¹ÙØµØ±ÙØ§",
+  "Quantity:": "Ø§ÙÙÙÙØ©:",
+  "Enter quantity": "Ø£Ø¯Ø®Ù Ø§ÙÙÙÙØ©",
+  "No items added yet.": "ÙÙ ÙØªÙ Ø¥Ø¶Ø§ÙØ© Ø¹ÙØ§ØµØ± Ø¨Ø¹Ø¯.",
+  "Item": "Ø¹ÙØµØ±",
+  "No Action": "ÙØ§ ÙÙØ¬Ø¯ Ø¥Ø¬Ø±Ø§Ø¡",
+  "All Task": "Ø¬ÙÙØ¹ Ø§ÙÙÙØ§Ù",
+  "Add New Staff": "Ø¥Ø¶Ø§ÙØ© ÙÙØ¸Ù Ø¬Ø¯ÙØ¯",
+  "Language": "Ø§ÙÙØºØ©",
+  "Terms of Use": "Ø´Ø±ÙØ· Ø§ÙØ§Ø³ØªØ®Ø¯Ø§Ù",
+  "Privacy Policy": "Ø³ÙØ§Ø³Ø© Ø§ÙØ®ØµÙØµÙØ©",
+  "Remove Account": "Ø­Ø°Ù Ø§ÙØ­Ø³Ø§Ø¨",
+  "Logout": "ØªØ³Ø¬ÙÙ Ø§ÙØ®Ø±ÙØ¬",
+  "New Request": "Ø¥Ø¶Ø§ÙØ© Ø·ÙØ¨ÙØ© Ø¬Ø¯ÙØ¯Ø©",
+  "Name": "Ø§ÙØ§Ø³Ù",
+  "Phone Number": "Ø±ÙÙ Ø§ÙÙØ§ØªÙ",
+  "Type Of Event": "ÙÙØ¹ Ø§ÙÙÙØ§Ø³Ø¨Ø©",
+  "Owner Of Event": "ØµØ§Ø­Ø¨ Ø§ÙÙÙØ§Ø³Ø¨Ø©",
+  "Hour": "Ø§ÙØ³Ø§Ø¹Ø©",
+  "Date": "Ø§ÙØªØ§Ø±ÙØ®",
+  "Address": "Ø§ÙØ¹ÙÙØ§Ù",
+  "Type of Building": "ÙÙØ¹ Ø§ÙÙØ¨ÙÙ",
+  "Float": "Ø¹Ø¯Ø¯ Ø§ÙØ·ÙØ§Ø¨Ù",
+  "Please Enter Float": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø¹Ø¯Ø¯ Ø§ÙØ·ÙØ§Ø¨Ù",
+  "Please Enter Type of Building": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù ÙÙØ¹ Ø§ÙÙØ¨ÙÙ",
+  "Please Enter Address": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ¹ÙÙØ§Ù",
+  "Please Enter Date": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙØªØ§Ø±ÙØ®",
+  "Please Enter Hour": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ³Ø§Ø¹Ø©",
+  "Please Enter Owner Of Event": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§Ø³Ù ØµØ§Ø­Ø¨ Ø§ÙÙÙØ§Ø³Ø¨Ø©",
+  "Please Enter Type Of Event": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù ÙÙØ¹ Ø§ÙÙÙØ§Ø³Ø¨Ø©",
+  "Please Enter Phone Number": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø±ÙÙ Ø§ÙÙØ§ØªÙ",
+  "Please Enter Name": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ§Ø³Ù",
+  "Next": "Ø§ÙØªØ§ÙÙ",
+  "Complete Request": "Ø¥ÙÙØ§Ù Ø§ÙØ·ÙØ¨",
+  "Notes": "ÙÙØ§Ø­Ø¸Ø§Øª",
+  "Add Item": "Ø¥Ø¶Ø§ÙØ© Ø¹ÙØµØ±",
+  "Add Special Desgin": "Ø¥Ø¶Ø§ÙØ© ØªØµÙÙÙ Ø®Ø§Øµ",
+  "Upload Images": "Ø±ÙØ¹ Ø§ÙØµÙØ±",
+  "Deposit": "Ø¯ÙØ¹Ø© ÙÙØ¯ÙØ©",
+  "Bank": "Ø§ÙØ¨ÙÙ",
+  "Please select an item": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± Ø¹ÙØµØ±",
+  "Receiving": "Ø§ÙØ§Ø³ØªÙØ§Ù",
+  "Select Catalog": "Ø§Ø®ØªØ± Ø§ÙÙØªØ§ÙÙØ¬",
+  "Please select a catalog": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± ÙØªØ§ÙÙØ¬",
+  "Select Sub-Category": "Ø§Ø®ØªØ± Ø§ÙÙØ¦Ø© Ø§ÙÙØ±Ø¹ÙØ©",
+  "Please select a sub-category": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± ÙØ¦Ø© ÙØ±Ø¹ÙØ©",
+  "Select Sub-Sub-Category": "Ø§Ø®ØªØ± Ø§ÙÙØ¦Ø© Ø§ÙÙØ±Ø¹ÙØ© Ø§ÙØ«Ø§ÙÙØ©",
+  "Please select a sub-sub-category": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± ÙØ¦Ø© ÙØ±Ø¹ÙØ© Ø«Ø§ÙÙØ©",
+  "Select Final Item": "Ø§Ø®ØªØ± Ø§ÙØ¹ÙØµØ± Ø§ÙÙÙØ§Ø¦Ù",
+  "Image": "ØµÙØ±Ø©",
+  "Price": "Ø§ÙØ³Ø¹Ø±",
+  "Action": "Ø§ÙØ¥Ø¬Ø±Ø§Ø¡",
+  "Staff": "Ø§ÙÙÙØ¸ÙÙÙ",
+  "Select User": "Ø§Ø®ØªØ± Ø§ÙÙØ³ØªØ®Ø¯Ù",
+  "Please select an User": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± ÙØ³ØªØ®Ø¯Ù",
+  "Select Type": "Ø§Ø®ØªØ± Ø§ÙÙÙØ¹",
+  "Please select a type": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± Ø§ÙÙÙØ¹",
+  "Add Staff": "Ø¥Ø¶Ø§ÙØ© ÙÙØ¸Ù",
+  "No Staff found.": "ÙÙ ÙØªÙ Ø§ÙØ¹Ø«ÙØ± Ø¹ÙÙ ÙÙØ¸ÙÙÙ.",
+  "Edit": "ØªØ¹Ø¯ÙÙ",
+  "Email": "Ø§ÙØ¨Ø±ÙØ¯ Ø§ÙØ¥ÙÙØªØ±ÙÙÙ",
+  "Type": "Ø§ÙÙÙØ¹",
+  "Edit Employee": "ØªØ¹Ø¯ÙÙ Ø§ÙÙÙØ¸Ù",
+  "Update Type": "ØªØ­Ø¯ÙØ« Ø§ÙÙÙØ¹",
+  "Delete Employee": "Ø­Ø°Ù Ø§ÙÙÙØ¸Ù",
+  "Sign in": "ØªØ³Ø¬ÙÙ Ø§ÙØ¯Ø®ÙÙ",
+  "Password": "ÙÙÙØ© Ø§ÙÙØ±ÙØ±",
+  "enter your password": "Ø£Ø¯Ø®Ù ÙÙÙØ© Ø§ÙÙØ±ÙØ±",
+  "Remember Me": "ØªØ°ÙØ±ÙÙ",
+  "Forgot Password?": "ÙÙ ÙØ³ÙØª ÙÙÙØ© Ø§ÙÙØ±ÙØ±Ø",
+  "Google": "Ø¬ÙØ¬Ù",
+  "Please Enter Your Password": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù ÙÙÙØ© Ø§ÙÙØ±ÙØ±",
+  "Please Enter Your Email": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ¨Ø±ÙØ¯ Ø§ÙØ¥ÙÙØªØ±ÙÙÙ",
+  "Login": "ØªØ³Ø¬ÙÙ Ø§ÙØ¯Ø®ÙÙ",
+  "Don't have an Account? ": "ÙÙØ³ ÙØ¯ÙÙ Ø­Ø³Ø§Ø¨Ø ",
+  "Sign up": "Ø¥ÙØ´Ø§Ø¡ Ø­Ø³Ø§Ø¨",
+  "UserName": "Ø§Ø³Ù Ø§ÙÙØ³ØªØ®Ø¯Ù",
+  "Phone no": "Ø±ÙÙ Ø§ÙÙØ§ØªÙ",
+  "Confirm Password": "ØªØ£ÙÙØ¯ ÙÙÙØ© Ø§ÙÙØ±ÙØ±",
+  "confirm your password": "Ø£ÙØ¯ ÙÙÙØ© Ø§ÙÙØ±ÙØ±",
+  "Please Enter Your Phone": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø±ÙÙ Ø§ÙÙØ§ØªÙ",
+  "Please Enter Your Name": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ§Ø³Ù",
+  "Password Not Match": "ÙÙÙØªØ§ Ø§ÙÙØ±ÙØ± ØºÙØ± ÙØªØ·Ø§Ø¨ÙØªÙÙ",
+  "Please Choose Your Image Profile": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± ØµÙØ±Ø© Ø§ÙÙÙÙ Ø§ÙØ´Ø®ØµÙ",
+  "Create Account": "Ø¥ÙØ´Ø§Ø¡ Ø­Ø³Ø§Ø¨",
+  "Already have an Account? ": "ÙØ¯ÙÙ Ø­Ø³Ø§Ø¨ Ø¨Ø§ÙÙØ¹ÙØ ",
+  "Image selection simulated!": "ØªÙ ÙØ­Ø§ÙØ§Ø© Ø§Ø®ØªÙØ§Ø± Ø§ÙØµÙØ±Ø©!",
+  "Welcome": "ÙØ±Ø­Ø¨ÙØ§",
+  "Your journey to a better life starts here.": " ÙØªÙÙÙ ÙÙ Ø§ÙØ§ÙØ§ ÙÙÙØ¦Ø© Ø¨Ø§ÙÙØ±Ø­ ÙØ§ÙØ§Ø­ØªÙØ§ÙØ§Øª.",
+  "Continue": "Ø§Ø³ØªÙØ±Ø§Ø±",
+  "Forget Password": "ÙØ³ÙØª ÙÙÙØ© Ø§ÙÙØ±ÙØ±",
+  "Send Email": "Ø¥Ø±Ø³Ø§Ù Ø§ÙØ¨Ø±ÙØ¯ Ø§ÙØ¥ÙÙØªØ±ÙÙÙ",
+  "Please select action": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± Ø¥Ø¬Ø±Ø§Ø¡",
+  "Link": "Ø±Ø§Ø¨Ø·",
+  "Url link": "Ø±Ø§Ø¨Ø· Ø¥ÙÙØªØ±ÙÙÙ",
+  "Please Upload Secound Image": "ÙØ±Ø¬Ù ØªØ­ÙÙÙ Ø§ÙØµÙØ±Ø© Ø§ÙØ«Ø§ÙÙØ©",
+  "Please Enter Url": "ÙØ±Ø¬Ù Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ±Ø§Ø¨Ø·",
+  "Please Upload Image": "ÙØ±Ø¬Ù ØªØ­ÙÙÙ Ø§ÙØµÙØ±Ø©",
+  "Add New Banner": "Ø¥Ø¶Ø§ÙØ© ÙØ§ÙØªØ© Ø¬Ø¯ÙØ¯Ø©",
+  "Banners": "ÙØ§ÙØªØ§Øª",
+  "Edit Banner": "ØªØ¹Ø¯ÙÙ ÙØ§ÙØªØ©",
+  "Update Banner": "ØªØ­Ø¯ÙØ« ÙØ§ÙØªØ©",
+  "Delete Banner": "Ø­Ø°Ù ÙØ§ÙØªØ©",
+  "No Image Selection": "ÙØ§ ÙÙØ¬Ø¯ Ø§Ø®ØªÙØ§Ø± ØµÙØ±Ø©",
+  "No items found.": "ÙÙ ÙØªÙ Ø§ÙØ¹Ø«ÙØ± Ø¹ÙÙ Ø¹ÙØ§ØµØ±.",
+  "Calender": "Ø§ÙØªÙÙÙÙ",
+  "Sunday": "Ø§ÙØ£Ø­Ø¯",
+  "Monday": "Ø§ÙØ§Ø«ÙÙÙ",
+  "Tuesday": "Ø§ÙØ«ÙØ§Ø«Ø§Ø¡",
+  "Wednesday": "Ø§ÙØ£Ø±Ø¨Ø¹Ø§Ø¡",
+  "Thursday": "Ø§ÙØ®ÙÙØ³",
+  "Friday": "Ø§ÙØ¬ÙØ¹Ø©",
+  "Saturday": "Ø§ÙØ³Ø¨Øª",
+  "You Don't Have Any Task": "ÙÙØ³ ÙØ¯ÙÙ Ø£Ù ÙÙÙØ©",
+  "Catalog": "Ø§ÙÙØªØ§ÙÙØ¬",
+  "Search Item": "Ø¨Ø­Ø« Ø¹ÙØµØ±",
+  "Name OF Item": "Ø§Ø³Ù Ø§ÙØ¹ÙØµØ±",
+  "Description": "Ø§ÙÙØµÙ",
+  "Description OF Item": "ÙØµÙ Ø§ÙØ¹ÙØµØ±",
+  "Price OF Item": "Ø³Ø¹Ø± Ø§ÙØ¹ÙØµØ±",
+  "Add New Item": "Ø¥Ø¶Ø§ÙØ© Ø¹ÙØµØ± Ø¬Ø¯ÙØ¯",
+  "Add New Category": "Ø¥Ø¶Ø§ÙØ© ÙØ¦Ø© Ø¬Ø¯ÙØ¯Ø©",
+  "Add New SubCategory": "Ø¥Ø¶Ø§ÙØ© ÙØ¦Ø© ÙØ±Ø¹ÙØ© Ø¬Ø¯ÙØ¯Ø©",
+  "Please Complete Data": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥ÙÙØ§Ù Ø§ÙØ¨ÙØ§ÙØ§Øª",
+  "Add New SubSubCategory": "Ø¥Ø¶Ø§ÙØ© ÙØ¦Ø© ÙØ±Ø¹ÙØ© Ø«Ø§ÙÙØ©",
+  "Update": "ØªØ­Ø¯ÙØ«",
+  "Please Add Name": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¶Ø§ÙØ© Ø§ÙØ§Ø³Ù",
+  "Edit Item": "ØªØ¹Ø¯ÙÙ Ø§ÙØ¹ÙØµØ±",
+  "Save Edit Item": "Ø­ÙØ¸ ØªØ¹Ø¯ÙÙ Ø§ÙØ¹ÙØµØ±",
+  "Delete Item": "Ø­Ø°Ù Ø§ÙØ¹ÙØµØ±",
+  "Chat": "Ø§ÙØ¯Ø±Ø¯Ø´Ø©",
+  "Good Morning,": "ØµØ¨Ø§Ø­ Ø§ÙØ®ÙØ±Ø",
+  "Top Catalog Items": "Ø£ÙØ¶Ù Ø¹ÙØ§ØµØ± Ø§ÙÙØªØ§ÙÙØ¬",
+  "Show All": "Ø¹Ø±Ø¶ Ø§ÙÙÙ",
+  "My Requests": "Ø·ÙØ¨Ø§ØªÙ",
+  "Home": "Ø§ÙØ±Ø¦ÙØ³ÙØ©",
+  "Add": "Ø¥Ø¶Ø§ÙØ©",
+  "Profile": "Ø§ÙÙÙÙ Ø§ÙØ´Ø®ØµÙ",
+  "All Request": "Ø¬ÙÙØ¹ Ø§ÙØ·ÙØ¨Ø§Øª",
+  "Failed to load image": "ÙØ´Ù ÙÙ ØªØ­ÙÙÙ Ø§ÙØµÙØ±Ø©",
+  "Good Morning": "ØµØ¨Ø§Ø­ Ø§ÙØ®ÙØ±",
+  "Select date": "Ø§Ø®ØªØ± Ø§ÙØªØ§Ø±ÙØ®",
+  "Access": "Ø§ÙÙØµÙÙ",
+  "Requset List": "ÙØ§Ø¦ÙØ© Ø§ÙØ·ÙØ¨Ø§Øª",
+  "View List": "Ø¹Ø±Ø¶ Ø§ÙÙØ§Ø¦ÙØ©",
+  "View Staff": "Ø¹Ø±Ø¶ Ø§ÙÙÙØ¸ÙÙÙ",
+  "Show Catalog": "Ø¹Ø±Ø¶ Ø§ÙÙØªØ§ÙÙØ¬",
+  "Order": "Ø§ÙØ§ÙØ± Ø§ÙØªØ´ØºÙÙ",
+  "order": "Ø§ÙØ·ÙØ¨Ø§Øª",
+  "On-hold": "ÙÙØ¯ Ø§ÙØªØ´ØºÙÙ",
+  "on_hold": "ÙØ¹ÙÙ",
+  "Show Banners": "Ø¹Ø±Ø¶ Ø§ÙÙØ§ÙØªØ§Øª",
+  "Reports": "Ø§ÙØªÙØ§Ø±ÙØ±",
+  "Show Reports": "Ø¹Ø±Ø¶ Ø§ÙØªÙØ§Ø±ÙØ±",
+  "InBox": "ØµÙØ¯ÙÙ Ø§ÙÙØ§Ø±Ø¯",
+  "Show InBox Mail": "Ø¹Ø±Ø¶ Ø¨Ø±ÙØ¯ Ø§ÙÙØ§Ø±Ø¯",
+  "Offers": "Ø¹Ø±Ø¶ Ø³Ø¹Ø±",
+  "Create Job Order": "Ø§ÙØ´Ø§Ø¡ Ø§ÙØ± Ø§ÙØªØ´ØºÙÙ",
+  "Client Name": "Ø§Ø³Ù Ø§ÙØ¹ÙÙÙ",
+  "Client Phone": "Ø±ÙÙ ÙØ§ØªÙ Ø§ÙØ¹ÙÙÙ",
+  "Create Offer": "Ø¥ÙØ´Ø§Ø¡ Ø¹Ø±Ø¶",
+  "Show All tasks": "Ø¹Ø±Ø¶ ÙÙ Ø§ÙÙÙØ§Ù",
+  "Title": "Ø§ÙØ¹ÙÙØ§Ù",
+  "Body": "Ø§ÙÙØ­ØªÙÙ",
+  "Please Enter Body": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙÙØ­ØªÙÙ",
+  "Please Enter Title": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ¹ÙÙØ§Ù",
+  "Add New InBox": "Ø¥Ø¶Ø§ÙØ© Ø¨Ø±ÙØ¯ Ø¬Ø¯ÙØ¯",
+  "No InBox found.": "ÙÙ ÙØªÙ Ø§ÙØ¹Ø«ÙØ± Ø¹ÙÙ Ø¨Ø±ÙØ¯.",
+  "ID": "ÙØ¹Ø±ÙÙ",
+  "ID OF Item": "ÙØ¹Ø±ÙÙ Ø§ÙØ¹ÙØµØ±",
+  "Price Buy OF Item": "Ø³Ø¹Ø± Ø´Ø±Ø§Ø¡ Ø§ÙØ¹ÙØµØ±",
+  "Count": "Ø§ÙÙÙÙØ©",
+  "Count OF Item": "ÙÙÙØ© Ø§ÙØ¹ÙØµØ±",
+  "Show Price": "Ø¹Ø±Ø¶ Ø§ÙØ³Ø¹Ø±",
+  "Please Enter Count": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙÙÙÙØ©",
+  "Please Enter Price Of Buy": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø³Ø¹Ø± Ø§ÙØ´Ø±Ø§Ø¡",
+  "Please Enter Price": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ³Ø¹Ø±",
+  "Please Enter ID": "Ø§ÙØ±Ø¬Ø§Ø¡ Ø¥Ø¯Ø®Ø§Ù Ø§ÙÙØ¹Ø±ÙÙ",
+  "Picture": "ØµÙØ±Ø©",
+  "Total Price": "Ø§ÙØ³Ø¹Ø± Ø§ÙØ¥Ø¬ÙØ§ÙÙ",
+  "Items": "Ø¹ÙØ§ØµØ±",
+  "Choose the language": "Ø§Ø®ØªØ± Ø§ÙÙØºØ©",
+  "English": "Ø§ÙØ¥ÙØ¬ÙÙØ²ÙØ©",
+  "Click here to Choose": "Ø§Ø¶ØºØ· ÙÙØ§ ÙÙØ§Ø®ØªÙØ§Ø±",
+  "Arabic": "Ø§ÙØ¹Ø±Ø¨ÙØ©",
+  "No Notification found.": "ÙÙ ÙØªÙ Ø§ÙØ¹Ø«ÙØ± Ø¹ÙÙ Ø¥Ø´Ø¹Ø§Ø±.",
+  "Notification History": "ØªØ§Ø±ÙØ® Ø§ÙØ¥Ø´Ø¹Ø§Ø±Ø§Øª",
+  "Create Offer Price": "Ø¥ÙØ´Ø§Ø¡ Ø³Ø¹Ø± Ø§ÙØ¹Ø±Ø¶",
+  "Company Name": "Ø§Ø³Ù Ø§ÙØ´Ø±ÙØ©",
+  "Delivry Price": "Ø³Ø¹Ø± Ø§ÙØªÙØµÙÙ",
+  "Size": "Ø§ÙØ­Ø¬Ù",
+  "Client & Request Details": "ØªÙØ§ØµÙÙ Ø§ÙØ¹ÙÙÙ ÙØ§ÙØ·ÙØ¨",
+  "client_request_details": "ØªÙØ§ØµÙÙ Ø§ÙØ¹ÙÙÙ ÙØ§ÙØ·ÙØ¨",
+  "Request Date": "ØªØ§Ø±ÙØ® Ø§ÙØ·ÙØ¨",
+  "request_date": "ØªØ§Ø±ÙØ® Ø§ÙØ·ÙØ¨",
+  "order_name": "Ø§Ø³Ù Ø§ÙØ·ÙØ¨ÙØ©",
+  "event_name": "Ø§Ø³Ù Ø§ÙÙÙØ§Ø³Ø¨Ø©",
+  "client_actual": "Ø§ÙØ¹ÙÙÙ",
+  "client_phone": "Ø±ÙÙ ÙØ§ØªÙ Ø§ÙØ¹ÙÙÙ",
+  "owner_of_event": "ØµØ§Ø­Ø¨ Ø§ÙÙÙØ§Ø³Ø¨Ø©",
+  "Order Number": "Ø±ÙÙ Ø§ÙØ·ÙØ¨",
+  "order_number": "Ø±ÙÙ Ø§ÙØ·ÙØ¨",
+  "invoice_number": "Ø±ÙÙ Ø§ÙÙØ§ØªÙØ±Ø©",
+  "Event & Location": "Ø§ÙÙÙØ§Ø³Ø¨Ø© ÙØ§ÙÙÙÙØ¹",
+  "event_location": "Ø§ÙÙÙØ§Ø³Ø¨Ø© ÙØ§ÙÙÙÙØ¹",
+  "Event Type": "ÙÙØ¹ Ø§ÙÙÙØ§Ø³Ø¨Ø©",
+  "Event Owner": "ÙØ§ÙÙ Ø§ÙÙÙØ§Ø³Ø¨Ø©",
+  "Payment Summary": "ÙÙØ®Øµ Ø§ÙØ¯ÙØ¹",
+  "payment_summary": "ÙÙØ®Øµ Ø§ÙØ¯ÙØ¹",
+  "Payment Method": "Ø·Ø±ÙÙØ© Ø§ÙØ¯ÙØ¹",
+  "payment_method": "Ø·Ø±ÙÙØ© Ø§ÙØ¯ÙØ¹",
+  "Remaining Fees": "Ø§ÙØ±Ø³ÙÙ Ø§ÙÙØªØ¨ÙÙØ©",
+  "receiving": "Ø§ÙØ§Ø³ØªÙØ§Ù",
+  "due_date": "ØªØ§Ø±ÙØ® Ø§ÙØªØ³ÙÙÙ",
+  "address": "Ø§ÙØ¹ÙÙØ§Ù",
+  "status": "Ø§ÙØ­Ø§ÙØ©",
+  "edit": "ØªØ¹Ø¯ÙÙ",
+  "save": "Ø­ÙØ¸",
+  "cancel": "Ø¥ÙØºØ§Ø¡",
+  "update_success": "ØªÙ Ø§ÙØªØ­Ø¯ÙØ« Ø¨ÙØ¬Ø§Ø­",
+  "update_failed": "ÙØ´Ù Ø§ÙØªØ­Ø¯ÙØ«",
+  "no_name": "Ø¨Ø¯ÙÙ Ø§Ø³Ù",
+  "permission_required_title": "ÙØªØ·ÙØ¨ Ø¥Ø°Ù",
+  "permission_camera_body": "ÙØ±Ø¬Ù Ø§ÙØ³ÙØ§Ø­ Ø¨Ø§ÙÙØµÙÙ ÙÙÙØ§ÙÙØ±Ø§ ÙØ§ÙØªÙØ§Ø· ØµÙØ±Ø©.",
+  "permission_gallery_body": "ÙØ±Ø¬Ù Ø§ÙØ³ÙØ§Ø­ Ø¨Ø§ÙÙØµÙÙ ÙÙØµÙØ± ÙØ§Ø®ØªÙØ§Ø± ÙÙ Ø§ÙÙØ¹Ø±Ø¶.",
+  "permission_open_settings": "ÙØªØ­ Ø§ÙØ¥Ø¹Ø¯Ø§Ø¯Ø§Øª",
+  "permission_cancel": "Ø¥ÙØºØ§Ø¡",
+  "Create": "Ø¥ÙØ´Ø§Ø¡",
+  "Assign Staff Members": "ØªØ¹ÙÙÙ ÙÙØ¸ÙÙÙ",
+  "Coordinator:": "Ø§ÙÙÙØ³Ù:",
+  "Designer:": "Ø§ÙÙØµÙÙ:",
+  "Driver:": "Ø§ÙØ³Ø§Ø¦Ù:",
+  "Vendor:": "Ø§ÙØ¨Ø§Ø¦Ø¹:",
+  "Requested Items": "Ø§ÙØ¹ÙØ§ØµØ± Ø§ÙÙØ·ÙÙØ¨Ø©",
+  "Tax": "Ø§ÙØ¶Ø±ÙØ¨Ø©",
+  "Total": "Ø§ÙØ¥Ø¬ÙØ§ÙÙ",
+  "Design Attached": "ØªØµÙÙÙ ÙØ±ÙÙ",
+  "No Design Provided": "ÙÙ ÙØªÙ ØªÙÙÙØ± ØªØµÙÙÙ",
+  "Special Design Status": "Ø­Ø§ÙØ© Ø§ÙØªØµÙÙÙ Ø§ÙØ®Ø§Øµ",
+  "Status:": "Ø§ÙØ­Ø§ÙØ©:",
+  "Please Select All Staff": "ÙØ±Ø¬Ù Ø§Ø®ØªÙØ§Ø± Ø¬ÙÙØ¹ Ø§ÙÙÙØ¸ÙÙÙ",
+  "Save Edit": "Ø­ÙØ¸ Ø§ÙØªØ¹Ø¯ÙÙ",
+  "Edit Staff Members": "ØªØ¹Ø¯ÙÙ Ø§ÙÙÙØ¸ÙÙÙ",
+  "Order Details": "ØªÙØ§ØµÙÙ Ø§ÙØ·ÙØ¨",
+  "Coordinator": "Ø§ÙÙÙØ³Ù",
+  "Designer": "Ø§ÙÙØµÙÙ",
+  "Driver": "Ø§ÙØ³Ø§Ø¦Ù",
+  "Vendor": "Ø§ÙØ¨Ø§Ø¦Ø¹",
+  "createby": "Ø£ÙØ´Ø¦ Ø¨ÙØ§Ø³Ø·Ø©",
+  "Show Tasks": "Ø¹Ø±Ø¶ Ø§ÙÙÙØ§Ù",
+  "Edit Price": "ØªØ¹Ø¯ÙÙ Ø§ÙØ³Ø¹Ø±",
+  "Save": "Ø­ÙØ¸",
+  "Tasks": "Ø§ÙÙÙØ§Ù",
+  "Employee": "Ø§ÙÙÙØ¸Ù",
+  "Compelete": "Ø§ÙØªÙÙ",
+  "Receipt from store": "Ø¥ÙØµØ§Ù ÙÙ Ø§ÙÙØªØ¬Ø±",
+  "Shipped": "ØªÙ Ø§ÙØ´Ø­Ù",
+  "Start moving": "Ø¨Ø¯Ø¡ Ø§ÙÙÙÙ",
+  "Delivered": "ØªÙ Ø§ÙØªÙØµÙÙ",
+  "installation": "ØªØ±ÙÙØ¨",
+  "Receipt from the customer": "Ø¥ÙØµØ§Ù ÙÙ Ø§ÙØ¹ÙÙÙ",
+  "Finish": "Ø¥ÙÙØ§Ø¡",
+  "Update Profile": "ØªØ­Ø¯ÙØ« Ø§ÙÙÙÙ Ø§ÙØ´Ø®ØµÙ",
+  "Enter New Password": "Ø£Ø¯Ø®Ù ÙÙÙØ© Ø§ÙÙØ±ÙØ± Ø§ÙØ¬Ø¯ÙØ¯Ø©",
+  "Confirm New Password": "ØªØ£ÙÙØ¯ ÙÙÙØ© Ø§ÙÙØ±ÙØ± Ø§ÙØ¬Ø¯ÙØ¯Ø©",
+  "Passwords Not match": "ÙÙÙØ§Øª Ø§ÙÙØ±ÙØ± ØºÙØ± ÙØªØ·Ø§Ø¨ÙØ©",
+  "Please Confirm New Password": "ÙØ±Ø¬Ù ØªØ£ÙÙØ¯ ÙÙÙØ© Ø§ÙÙØ±ÙØ± Ø§ÙØ¬Ø¯ÙØ¯Ø©",
+  "Please Enter New Password": "ÙØ±Ø¬Ù Ø¥Ø¯Ø®Ø§Ù ÙÙÙØ© Ø§ÙÙØ±ÙØ± Ø§ÙØ¬Ø¯ÙØ¯Ø©",
+  "Update Your Password": "ØªØ­Ø¯ÙØ« ÙÙÙØ© Ø§ÙÙØ±ÙØ±",
+  "Full Name": "Ø§ÙØ§Ø³Ù Ø§ÙÙØ§ÙÙ",
+  "Update Password": "ØªØ­Ø¯ÙØ« ÙÙÙØ© Ø§ÙÙØ±ÙØ±"
 }

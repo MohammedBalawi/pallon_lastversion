@@ -22,7 +22,7 @@ class _OrderWidget extends State<OrderWidget>{
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
           backgroundColor: const Color(0xFF07933E),
-          title: Text("Order".tr,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          title: Text("order".tr,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
         leading: IconButton(onPressed: (){
           Get.back();
         }, icon: Icon(Icons.arrow_back,color: Colors.white,)),

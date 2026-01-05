@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -59,6 +60,21 @@ Future<int> _getNextReqNumber() async {
   });
 }
 
+Future<void> resetReqOrderCounter({
+  int next = 0,
+  bool resetLegacyConst = false,
+}) async {
+  if (kReleaseMode) return;
+  final counterRef = _firestore.collection('counters').doc('req');
+  await counterRef.set({'next': next}, SetOptions(merge: true));
+
+  if (resetLegacyConst) {
+    await _firestore.collection('const').doc("qaJdz7K1kwuKQLWlSHdG").update({
+      "ordernumber": (next - 1).toString(),
+    });
+  }
+}
+
 Future<List<CatalogItemModel>> _ensureItemsHaveUrls(List<CatalogItemModel> items) async {
   final results = <CatalogItemModel>[];
 
@@ -99,7 +115,7 @@ ReqDataModel _reqDataFromSnap(DocumentSnapshot<Map<String, dynamic>> value) {
     item: [],
     float: (data['float'] ?? "").toString(),
     address: (data['address'] ?? "").toString(),
-    date: (data['date'] ?? "").toString(),
+    date: ReqDataModel.normalizeDate(data['date']),
     hour: (data['hour'] ?? "").toString(),
     phone: (data['phone'] ?? "").toString(),
     createby: (data['createby'] ?? "").toString(),
@@ -116,6 +132,10 @@ ReqDataModel _reqDataFromSnap(DocumentSnapshot<Map<String, dynamic>> value) {
     typeOfEvent: (data['typeofevent'] ?? "").toString(),
     branch: (data['branch'] ?? "").toString(),
     typebank: (data['banktype'] ?? "").toString(),
+    invoiceNumber: (data['invoiceNumber'] ?? data['invoice_number'] ?? "").toString(),
+    eventName: (data['eventName'] ?? data['event_name'] ?? "").toString(),
+    requestDate: ReqDataModel.normalizeDate(data['requestDate'] ?? data['request_date']),
+    createdAt: ReqDataModel.normalizeDate(data['createdAt']),
   );
 
   reqq.orderNumber = (data['ordernumber'] ?? data['orderNumber'] ?? "").toString();
@@ -319,6 +339,7 @@ Future<void> Submit(
     await _firestore.collection('req').doc(docId).set({
       'orderNumber': orderNumber,
       'ordernumber': orderNumber,
+      'invoiceNumber': orderNumber,
       'orderNoInt': reqNumber,
       'createdAt': FieldValue.serverTimestamp(),
 
@@ -426,6 +447,7 @@ Future<void> Submit2(
     await _firestore.collection('req').doc(docId).set({
       'orderNumber': orderNumber,
       'ordernumber': orderNumber,
+      'invoiceNumber': orderNumber,
       'orderNoInt': reqNumber,
       'createdAt': FieldValue.serverTimestamp(),
 

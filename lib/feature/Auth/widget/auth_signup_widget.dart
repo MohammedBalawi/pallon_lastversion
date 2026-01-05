@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../Core/Utils/app.images.dart';
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Utils/manager_fonts.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../Core/Widgets/social_media_button.dart';
@@ -90,9 +91,11 @@ class _AuthSignupWidgetState extends State<AuthSignupWidget> {
   }
 
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile =
-    await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    final pickedFile = await pickImageWithPermission(
+      context,
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
 
     if (pickedFile != null) {
       setState(() => _image = File(pickedFile.path));

@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'Core/Utils/app.routes.dart';
-import 'Core/Widgets/App_localization.dart';
+import 'Core/Utils/manager_fonts.dart';
+import 'Core/Utils/translations_loader.dart';
 import 'feature/splash/views/splash_view.dart';
 import 'firebase_options.dart';
 final GlobalKey<ScaffoldMessengerState> rootMessengerKey =
@@ -103,6 +106,12 @@ Future<void> main() async {
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
 
+  final deviceLocale = Get.deviceLocale ?? const Locale('en');
+  final initialLocaleCode = deviceLocale.languageCode == 'ar' ? 'ar' : 'en';
+  Intl.defaultLocale = initialLocaleCode;
+  await initializeDateFormatting('en', null);
+  await initializeDateFormatting('ar', null);
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final messaging = FirebaseMessaging.instance;
@@ -160,23 +169,32 @@ Future<void> main() async {
     });
   }
 
-  runApp(Phoenix(child: const MyApp()));
+  final translations = await loadTranslations();
+  runApp(Phoenix(child: MyApp(translations: translations)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.translations});
+  final Map<String, Map<String, String>> translations;
 
   @override
   Widget build(BuildContext context) {
+    final deviceLocale = Get.deviceLocale ?? const Locale('en');
+    final localeCode = deviceLocale.languageCode == 'ar' ? 'ar' : 'en';
+
     return GetMaterialApp(
       scaffoldMessengerKey: rootMessengerKey,
       debugShowCheckedModeBanner: false,
-      translations: AppTranslations(),
+      translationsKeys: translations,
       routes: appRoutes,
-      initialRoute: SplashView.id,
-      locale: Get.deviceLocale,
-      fallbackLocale: const Locale('en', 'US'),
+      initialRoute: '/',
+      locale: Locale(localeCode),
+      fallbackLocale: const Locale('en'),
       theme: ThemeData(
+        fontFamily: ManagerFontFamily.fontFamily,
+        textTheme: ThemeData.light().textTheme.apply(
+          fontFamily: ManagerFontFamily.fontFamily,
+        ),
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         inputDecorationTheme: InputDecorationTheme(

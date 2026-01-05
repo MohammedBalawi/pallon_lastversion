@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Utils/manager_fonts.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../functions/banner_function.dart';
@@ -395,9 +396,11 @@ class _AddBannerWidget extends State<AddBannerWidget> {
   }
 
   void _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile =
-    await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    final pickedFile = await pickImageWithPermission(
+      context,
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
 
     if (pickedFile != null) {
       setState(() {
@@ -414,9 +417,11 @@ class _AddBannerWidget extends State<AddBannerWidget> {
   }
 
   void _pickImage2() async {
-    final picker = ImagePicker();
-    final pickedFile =
-    await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    final pickedFile = await pickImageWithPermission(
+      context,
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
 
     if (pickedFile != null) {
       setState(() {

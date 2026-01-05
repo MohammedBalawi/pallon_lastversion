@@ -243,6 +243,11 @@ Future<void> CreateJopOrder(
     String ordernumber,
     ) async {
   try {
+    final resolvedInvoiceNumber = (req.invoiceNumber ?? "").toString().trim();
+    final rawNotifyNumber = resolvedInvoiceNumber.isNotEmpty
+        ? resolvedInvoiceNumber
+        : ordernumber.toString().trim();
+    final notifyNumber = ReqDataModel.formatOrderNumber(rawNotifyNumber);
     final staff = await GetAllStaff();
 
     final sentTokens = <String>{};
@@ -273,7 +278,7 @@ Future<void> CreateJopOrder(
         screen,
         userDocId: uid.isEmpty ? null : uid,
         dataExtras: {
-          'ordernumber': ordernumber,
+          'invoiceNumber': notifyNumber,
           'reqDoc': req.doc,
         },
       );
@@ -302,16 +307,16 @@ Future<void> CreateJopOrder(
           .collection('Notification')
           .add({
         'title': "New Task",
-        'body': "تم إنشاء أمر تنفيذ رقم $ordernumber",
+        'body': "تم إنشاء أمر تنفيذ رقم $notifyNumber",
         'doc': req.doc,
-        'ordernumber': ordernumber,
+        'invoiceNumber': notifyNumber,
         'createdAt': FieldValue.serverTimestamp(),
       });
 
       await safeSendToUser(
         user,
         "New Task",
-        "تم إنشاء أمر تنفيذ رقم $ordernumber",
+        "تم إنشاء أمر تنفيذ رقم $notifyNumber",
         "4",
       );
     }
@@ -323,12 +328,14 @@ Future<void> CreateJopOrder(
 
     await _firestore.collection('req').doc(req.doc).update({
       'status': 'order',
-      'ordernumber': ordernumber,
+      'orderNumber': notifyNumber,
+      'ordernumber': notifyNumber,
+      'invoiceNumber': notifyNumber,
       'task': 'desginer',
       'taskstatus': 'progress',
     });
 
-    int x = int.tryParse(ordernumber) ?? 0;
+    int x = int.tryParse(notifyNumber) ?? 0;
     x++;
     await _firestore.collection('const').doc("qaJdz7K1kwuKQLWlSHdG").update({
       "ordernumber": x.toString(),
@@ -349,10 +356,10 @@ Future<void> CreateJopOrder(
       await sendNotification(
         tok,
         "New Order",
-        "تم إنشاء أمر تنفيذ رقم $ordernumber",
+        "تم إنشاء أمر تنفيذ رقم $notifyNumber",
         "4",
         dataExtras: {
-          'ordernumber': ordernumber,
+          'invoiceNumber': notifyNumber,
           'reqDoc': req.doc,
         },
       );
@@ -362,7 +369,7 @@ Future<void> CreateJopOrder(
       await safeSendToUser(
         u,
         "New Order",
-        "تم إنشاء أمر تنفيذ رقم $ordernumber",
+        "تم إنشاء أمر تنفيذ رقم $notifyNumber",
         "4",
       );
     }

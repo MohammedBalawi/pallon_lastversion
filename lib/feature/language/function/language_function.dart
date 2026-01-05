@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Core/Widgets/common_widgets.dart';
@@ -9,10 +10,11 @@ void SetLanguagr(BuildContext context,String langCode){
   Locale locale;
   try{
     if (langCode == 'ar') {
-      locale = const Locale('ar', 'DZ');
+      locale = const Locale('ar');
     } else {
-      locale = const Locale('en', 'US');
+      locale = const Locale('en');
     }
+    Intl.defaultLocale = locale.languageCode;
     Get.updateLocale(locale).whenComplete((){
       Get.back();
       mesgCustom(context,"Language Updated");

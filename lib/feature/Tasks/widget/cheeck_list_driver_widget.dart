@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pallon_lastversion/feature/Tasks/funcation/task_function.dart';
 import 'package:pallon_lastversion/models/item_model.dart';
 
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/order_model.dart';
 
@@ -176,8 +177,10 @@ class _CheeckListDriverWidget extends State<CheeckListDriverWidget>{
     );
   }
   void _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await pickImageWithPermission(
+      context,
+      source: ImageSource.gallery,
+    );
 
     if (pickedFile != null) {
       setState(() {

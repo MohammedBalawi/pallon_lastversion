@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Utils/manager_fonts.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../Funcation/catalog_function.dart';
@@ -247,8 +248,8 @@ class _CreateCatalogWidget extends State<CreateCatalogWidget> {
   }
 
   void _pickImageGallery() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
+    final pickedFile = await pickImageWithPermission(
+      context,
       source: ImageSource.gallery,
       imageQuality: 75,
     );
@@ -268,8 +269,8 @@ class _CreateCatalogWidget extends State<CreateCatalogWidget> {
   }
 
   void _pickImageCamera() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
+    final pickedFile = await pickImageWithPermission(
+      context,
       source: ImageSource.camera,
       imageQuality: 75,
     );

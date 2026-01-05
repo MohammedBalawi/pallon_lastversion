@@ -36,15 +36,20 @@ Widget StreamClientReq(BuildContext context,bool scrool){
       List<ReqDataModel> req=[];
       final messages = snapshot.data!.docs;
       for (var message in messages.reversed){
+        final data = message.data() as Map<String, dynamic>;
         req.add(ReqDataModel(doc:message.id ,name: message.get('name'), fees: message.get('fees'), total: message.get('total'),
             des: [], item: [], float: message.get('float'), address: message.get('address'),
-            date: message.get('date'), hour: message.get('hour'), phone: message.get('phone'),
+            date: ReqDataModel.normalizeDate(message.get('date')), hour: message.get('hour'), phone: message.get('phone'),
             createby: message.get('createby'),
             deposite: message.get('deposit'), design: message.get('desgin'), notes: message.get('notes'),
             ownerOfevent: message.get('ownerofevent'),
             status: message.get('status'), typeby: message.get('typeCreate'), typeOfBuilding: message.get('typeofbuilding'),
             typeOfEvent: message.get('typeofevent'),
-            branch:message.get("branch") ,typebank: message.get("banktype")));
+            branch:message.get("branch") ,typebank: message.get("banktype"),
+            invoiceNumber: (data['invoiceNumber'] ?? data['invoice_number'] ?? "").toString(),
+            eventName: (data['eventName'] ?? data['event_name'] ?? "").toString(),
+            requestDate: ReqDataModel.normalizeDate(data['requestDate'] ?? data['request_date']),
+            createdAt: ReqDataModel.normalizeDate(data['createdAt'])));
       }
       return ListView.builder(
         itemCount: req.length,

@@ -1,15 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pallon_lastversion/Core/Utils/manager_fonts.dart';
 
 import '../../../models/order_model.dart';
 import '../../../models/req_data_model.dart';
 import '../view/order_details_view.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+final Map<String, String> _creatorNameCache = {};
+final Map<String, Future<String>> _creatorNameFutureCache = {};
+
+Future<String> _getCreatorName(ReqDataModel req) async {
+  final name = (req.createname ?? '').trim();
+  final uid = (req.createby).trim();
+
+  if (name.isNotEmpty) {
+    if (uid.isNotEmpty) _creatorNameCache[uid] = name;
+    return name;
+  }
+
+  if (uid.isEmpty) return "-";
+
+  final cached = _creatorNameCache[uid];
+  if (cached != null && cached.trim().isNotEmpty) return cached;
+
+  final cachedFuture = _creatorNameFutureCache[uid];
+  if (cachedFuture != null) return cachedFuture;
+
+  final future = _firestore.collection('user').doc(uid).get().then((doc) {
+    final data = doc.data() ?? {};
+    final resolved = (data['name'] ?? '').toString().trim();
+    if (resolved.isNotEmpty) _creatorNameCache[uid] = resolved;
+    return resolved.isNotEmpty ? resolved : "-";
+  }).catchError((_) => "-");
+
+  _creatorNameFutureCache[uid] = future;
+  return future;
+}
 
 Widget CustomListOrders(BuildContext context) {
   final screenHeight = MediaQuery.of(context).size.height;
@@ -49,6 +79,43 @@ Widget CustomListOrders(BuildContext context) {
     final tot = _safeDouble(req.total);
     if (tot <= 0) return 0.0;
     return dep / tot;
+  }
+
+  DateTime? _parseDateValue(dynamic raw) {
+    if (raw == null) return null;
+    if (raw is Timestamp) return raw.toDate();
+    if (raw is DateTime) return raw;
+    if (raw is num) {
+      return DateTime.fromMillisecondsSinceEpoch(raw.toInt());
+    }
+
+    final value = raw.toString().trim();
+    if (value.isEmpty) return null;
+
+    try {
+      return DateTime.parse(value);
+    } catch (_) {}
+
+    for (final fmt in [
+      DateFormat('yyyy/MM/dd'),
+      DateFormat('yyyy-MM-dd'),
+      DateFormat('dd/MM/yyyy'),
+      DateFormat('MM/dd/yyyy'),
+    ]) {
+      try {
+        return fmt.parseLoose(value);
+      } catch (_) {}
+    }
+
+    return null;
+  }
+
+  String _formatDateText(dynamic raw) {
+    final parsed = _parseDateValue(raw);
+    final rawText = raw?.toString().trim() ?? "";
+    if (parsed == null) return rawText.isEmpty ? "-" : rawText;
+    final locale = Get.locale?.languageCode ?? Intl.getCurrentLocale();
+    return DateFormat.yMMMd(locale).format(parsed);
   }
 
   Widget infoLine({required String label, required String value}) {
@@ -102,10 +169,11 @@ Widget CustomListOrders(BuildContext context) {
           item: [],
           float: (data['float'] ?? "").toString(),
           address: (data['address'] ?? "").toString(),
-          date: (data['date'] ?? "").toString(),
+          date: ReqDataModel.normalizeDate(data['date']),
           hour: (data['hour'] ?? "").toString(),
           phone: (data['phone'] ?? "").toString(),
           createby: (data['createby'] ?? "").toString(),
+          createname: (data['createname'] ?? "").toString(),
           deposite: (data['deposit'] ?? data['deposite'] ?? "0").toString(),
           design: (data['desgin'] ?? data['design'] ?? "").toString(),
           notes: (data['notes'] ?? "").toString(),
@@ -116,11 +184,15 @@ Widget CustomListOrders(BuildContext context) {
           typeOfEvent: (data['typeofevent'] ?? "").toString(),
           branch: (data['branch'] ?? "").toString(),
           typebank: (data['banktype'] ?? "").toString(),
+          invoiceNumber: (data['invoiceNumber'] ?? data['invoice_number'] ?? "").toString(),
+          eventName: (data['eventName'] ?? data['event_name'] ?? "").toString(),
+          requestDate: ReqDataModel.normalizeDate(data['requestDate'] ?? data['request_date']),
+          createdAt: ReqDataModel.normalizeDate(data['createdAt']),
         );
 
         req.orderNumber = (data['orderNumber'] ?? "").toString().trim();
 
-        req.jobOrderNumber = (data['ordernumber'] ?? "").toString().trim();
+        req.jobOrderNumber = (data['jobOrderNumber'] ?? "").toString().trim();
 
         req.task = (data['task'] ?? "").toString().trim();
 
@@ -132,6 +204,7 @@ Widget CustomListOrders(BuildContext context) {
         itemCount: lists.length,
         itemBuilder: (context, index) {
           final req = lists[index];
+          final creatorNameFuture = _getCreatorName(req);
 
           double progress = _progressFromTask(req);
           progress = progress.clamp(0.0, 1.0);
@@ -145,9 +218,10 @@ Widget CustomListOrders(BuildContext context) {
               ? "-"
               : (req.jobOrderNumber ?? "").trim();
 
-          final reqNoText = (req.orderNumber ?? "").trim().isEmpty
+          final reqNoText = req.canonicalOrderNumber().trim().isEmpty
               ? "-"
-              : (req.orderNumber ?? "").trim();
+              : req.canonicalOrderNumber();
+          final dueDateText = _formatDateText(req.date);
 
           return InkWell(
             onTap: () {
@@ -188,13 +262,21 @@ Widget CustomListOrders(BuildContext context) {
 
                     Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            req.typeOfEvent,
-                            style: titleStyle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                          FutureBuilder<String>(
+                            future: creatorNameFuture,
+                            builder: (context, snapshot) {
+                              final creatorName = (snapshot.data ?? "").trim();
+                              final displayName = creatorName.isNotEmpty ? creatorName : "-";
+                              final titleText = req.displayTitleName(fallback: "no_name".tr);
+                              return Text(
+                                titleText,
+                                style: titleStyle,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            },
                           ),
                           const SizedBox(height: 10),
 
@@ -215,20 +297,27 @@ Widget CustomListOrders(BuildContext context) {
                                       value: reqNoText,
                                     ),
 
-                                    infoLine(
-                                      label: "Created By".tr,
-                                      value: req.createby,
+                                    FutureBuilder<String>(
+                                      future: creatorNameFuture,
+                                      builder: (context, snapshot) {
+                                        final creatorName = (snapshot.data ?? "").trim();
+                                        final displayName = creatorName.isNotEmpty ? creatorName : "-";
+                                        return infoLine(
+                                          label: "Created By".tr,
+                                          value: displayName,
+                                        );
+                                      },
                                     ),
                                     infoLine(
                                       label: "Branch".tr,
                                       value: req.branch,
                                     ),
                                     infoLine(
-                                      label: "Payment Type:".tr,
+                                      label: "payment_method".tr,
                                       value: req.typebank,
                                     ),
                                     infoLine(
-                                      label: "Status".tr,
+                                      label: "status".tr,
                                       value: req.status,
                                     ),
                                   ],
@@ -301,10 +390,10 @@ Widget CustomListOrders(BuildContext context) {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text('Due date'.tr, style: labelStyle),
+                                  Text('due_date'.tr, style: labelStyle),
                                   const SizedBox(height: 6),
                                   Text(
-                                    req.date,
+                                    dueDateText,
                                     style: valueStyle.copyWith(fontWeight: FontWeight.bold),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
