@@ -1,14 +1,14 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pallon_lastversion/models/image_model.dart';
 import 'package:pallon_lastversion/models/item_model.dart';
 import 'package:pallon_lastversion/models/order_model.dart';
 import 'package:pallon_lastversion/models/user_model.dart';
+import '../../../Core/Utils/storage_upload.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/req_data_model.dart';
 import '../../../models/task_model.dart';
@@ -149,12 +149,12 @@ void FinishTask(BuildContext context,OrderModel order,String next,String status)
   }
 }
 
-void UploadDesgin(List<File> image,BuildContext context,OrderModel order)async{
+void UploadDesgin(List<XFile> image,BuildContext context,OrderModel order)async{
   try{
     for(int i=0;i<image.length;i++){
       final path = "item/photos/item-${DateTime.now().toString()}.jpg";
       final ref = FirebaseStorage.instance.ref().child(path);
-      final uploadTask = ref.putFile(image[i]!);
+      final uploadTask = await uploadXFile(ref, image[i]);
       final snapshot = await uploadTask.whenComplete(() {});
       final urlDownload = await snapshot.ref.getDownloadURL();
       await _firestore.collection('req').doc(order.req!.doc).collection('designer').doc().set({

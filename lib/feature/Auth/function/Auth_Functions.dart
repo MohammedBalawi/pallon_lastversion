@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../splash/views/splash_view.dart';
 
@@ -23,7 +23,7 @@ Future<void> SignInMethod(
 
 Future<void> SignUpMethod(
     String name,
-    File img,
+    XFile? img,
     String email,
     String password,
     String phone,

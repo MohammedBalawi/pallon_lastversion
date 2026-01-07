@@ -1,12 +1,12 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../Core/Utils/storage_upload.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/catalog_item_model.dart';
 import '../../../models/catalog_model.dart';
@@ -31,14 +31,20 @@ Future<String?> _uploadLocalImage(String path) async {
   final user = _auth.currentUser;
   if (user == null) return null;
 
-  final file = File(p);
-  if (!file.existsSync()) return null;
+  final xfile = XFile(p);
+  try {
+    final bytes = await xfile.readAsBytes();
+    if (bytes.isEmpty) return null;
+  } catch (_) {
+    return null;
+  }
 
   final storagePath = "user/photos/${user.uid}-${DateTime.now().millisecondsSinceEpoch}.jpg";
   final ref = FirebaseStorage.instance.ref().child(storagePath);
 
-  final snap = await ref.putFile(file);
-  return await snap.ref.getDownloadURL();
+  final uploadTask = await uploadXFile(ref, xfile);
+  final snapshot = await uploadTask.whenComplete(() {});
+  return await snapshot.ref.getDownloadURL();
 }
 
 Future<int> _getNextReqNumber() async {
@@ -412,7 +418,7 @@ Future<void> Submit2(
     UserModel user,
     bool des,
     ReqModel req,
-    List<File> images,
+    List<XFile> images,
     List<CatalogItemModel> items,
     String notes,
     double deposit,
@@ -429,12 +435,11 @@ Future<void> Submit2(
 
     if (currentUser != null) {
       for (final file in images) {
-        if (!file.existsSync()) continue;
-
         final path = "user/photos/${currentUser.uid}-${DateTime.now().millisecondsSinceEpoch}.jpg";
         final ref = FirebaseStorage.instance.ref().child(path);
-        final snap = await ref.putFile(file);
-        urlImages.add(await snap.ref.getDownloadURL());
+        final uploadTask = await uploadXFile(ref, file);
+        final snapshot = await uploadTask.whenComplete(() {});
+        urlImages.add(await snapshot.ref.getDownloadURL());
       }
     }
 

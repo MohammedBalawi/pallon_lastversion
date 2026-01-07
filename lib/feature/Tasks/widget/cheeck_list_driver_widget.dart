@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +7,8 @@ import 'package:pallon_lastversion/feature/Tasks/funcation/task_function.dart';
 import 'package:pallon_lastversion/models/item_model.dart';
 
 import '../../../Core/Utils/image_picker_utils.dart';
+import '../../../Core/Utils/storage_upload.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/order_model.dart';
 
@@ -28,7 +28,7 @@ class _CheeckListDriverWidget extends State<CheeckListDriverWidget>{
   List<ItemModel> items=[];
   List<TextEditingController> controllers=[];
   FirebaseFirestore _firestore=FirebaseFirestore.instance;
-  File? _image;
+  XFile? _image;
   @override
   void initState() {
     // TODO: implement initState
@@ -65,8 +65,8 @@ class _CheeckListDriverWidget extends State<CheeckListDriverWidget>{
                       backgroundColor: Colors.black,
                       child: _image != null
                           ? ClipOval(
-                        child: Image.file(
-                          _image!,
+                        child: Image(
+                          image: imageProviderForXFile(_image!),
                           width: screenWidth * 0.3,
                           height: screenWidth * 0.3,
                           fit: BoxFit.cover,
@@ -110,7 +110,7 @@ class _CheeckListDriverWidget extends State<CheeckListDriverWidget>{
                         try{
                           final path = "item/photos/item-${DateTime.now().toString()}.jpg";
                           final ref = FirebaseStorage.instance.ref().child(path);
-                          final uploadTask = ref.putFile(_image!);
+                          final uploadTask = await uploadXFile(ref, _image!);
                           final snapshot = await uploadTask.whenComplete(() {});
                           final urlDownload = await snapshot.ref.getDownloadURL();
                           await _firestore.collection('req').doc(widget._orderModel.req!.doc).collection('driver').doc().set({
@@ -184,7 +184,7 @@ class _CheeckListDriverWidget extends State<CheeckListDriverWidget>{
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
     }
 

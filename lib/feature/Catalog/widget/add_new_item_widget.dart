@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../Funcation/catalog_function.dart';
 
@@ -30,7 +29,7 @@ class _AddNewItemWidget extends State<AddNewItemWidget> {
   final TextEditingController _des = TextEditingController();
   final TextEditingController _price = TextEditingController();
 
-  File? _image;
+  XFile? _image;
   bool _show = false;
 
   @override
@@ -130,8 +129,8 @@ class _AddNewItemWidget extends State<AddNewItemWidget> {
                             child: _image != null
                                 ? ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: Image.file(
-                                _image!,
+                              child: Image(
+                                image: imageProviderForXFile(_image!),
                                 fit: BoxFit.cover,
                               ),
                             )
@@ -346,7 +345,7 @@ class _AddNewItemWidget extends State<AddNewItemWidget> {
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -365,7 +364,7 @@ class _AddNewItemWidget extends State<AddNewItemWidget> {
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(

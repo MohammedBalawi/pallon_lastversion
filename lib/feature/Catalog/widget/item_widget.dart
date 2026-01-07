@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/catalog_item_model.dart';
 import '../Funcation/catalog_function.dart';
@@ -32,7 +31,7 @@ class _ItemWidgetState extends State<ItemWidget> {
   final TextEditingController _des   = TextEditingController();
   final TextEditingController _price = TextEditingController();
 
-  File? _image;
+  XFile? _image;
   bool _show = false;
 
   @override
@@ -112,8 +111,8 @@ class _ItemWidgetState extends State<ItemWidget> {
                   backgroundColor: Colors.white,
                   child: _image != null
                       ? ClipOval(
-                    child: Image.file(
-                      _image!,
+                    child: Image(
+                      image: imageProviderForXFile(_image!),
                       width: screenWidth * 0.3,
                       height: screenWidth * 0.3,
                       fit: BoxFit.cover,
@@ -370,7 +369,7 @@ class _ItemWidgetState extends State<ItemWidget> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      setState(() => _image = File(pickedFile.path));
+      setState(() => _image = pickedFile);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -389,7 +388,7 @@ class _ItemWidgetState extends State<ItemWidget> {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      setState(() => _image = File(pickedFile.path));
+      setState(() => _image = pickedFile);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

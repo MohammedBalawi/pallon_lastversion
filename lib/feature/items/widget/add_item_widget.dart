@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../Core/Widgets/common_widgets.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../models/item_model.dart';
 import '../function/item_action.dart';
 
@@ -28,7 +27,7 @@ class _AddItemWidget extends State<AddItemWidget>{
   TextEditingController price=TextEditingController();
   TextEditingController priceOfbuy=TextEditingController();
   TextEditingController _des=TextEditingController();
-  File? _image;
+  XFile? _image;
   bool _showprice=false;
   bool load=false;
   @override
@@ -92,8 +91,8 @@ class _AddItemWidget extends State<AddItemWidget>{
                   backgroundColor: Colors.white,
                   child: _image != null
                       ? ClipOval(
-                    child: Image.file(
-                      _image!,
+                    child: Image(
+                      image: imageProviderForXFile(_image!),
                       width: screenWidth * 0.3,
                       height: screenWidth * 0.3,
                       fit: BoxFit.cover,
@@ -374,7 +373,7 @@ class _AddItemWidget extends State<AddItemWidget>{
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
     }
 
@@ -444,7 +443,7 @@ class _AddItemWidget extends State<AddItemWidget>{
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
     }
 

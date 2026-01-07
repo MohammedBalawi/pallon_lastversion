@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../Core/Utils/image_picker_utils.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../models/banner_model.dart';
 import '../functions/banner_function.dart';
 
@@ -25,8 +24,8 @@ class EditBannerWidget extends StatefulWidget {
 class _EditBannerWidget extends State<EditBannerWidget> {
   String _typeaction = "";
   bool _show = false;
-  File? _image;
-  File? _image2;
+  XFile? _image;
+  XFile? _image2;
   TextEditingController _link = TextEditingController();
 
   @override
@@ -138,8 +137,8 @@ class _EditBannerWidget extends State<EditBannerWidget> {
                                   backgroundColor: Colors.white,
                                   child: _image != null
                                       ? ClipOval(
-                                    child: Image.file(
-                                      _image!,
+                                    child: Image(
+                                      image: imageProviderForXFile(_image!),
                                       width: screenWidth * 0.36,
                                       height: screenWidth * 0.36,
                                       fit: BoxFit.cover,
@@ -288,8 +287,8 @@ class _EditBannerWidget extends State<EditBannerWidget> {
                                         backgroundColor: Colors.white,
                                         child: _image2 != null
                                             ? ClipOval(
-                                          child: Image.file(
-                                            _image2!,
+                                          child: Image(
+                                            image: imageProviderForXFile(_image2!),
                                             width: screenWidth * 0.36,
                                             height: screenWidth * 0.36,
                                             fit: BoxFit.cover,
@@ -494,7 +493,7 @@ class _EditBannerWidget extends State<EditBannerWidget> {
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -520,7 +519,7 @@ class _EditBannerWidget extends State<EditBannerWidget> {
 
     if (pickedFile != null) {
       setState(() {
-        _image2 = File(pickedFile.path);
+        _image2 = pickedFile;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

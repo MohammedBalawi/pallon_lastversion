@@ -1,14 +1,12 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pallon_lastversion/Core/Utils/manager_fonts.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:share_plus/share_plus.dart';
 import 'package:pallon_lastversion/Core/Utils/app.images.dart';
+import 'package:pallon_lastversion/Core/Utils/share_download.dart';
 
 class OfferWidget extends StatefulWidget {
   @override
@@ -496,13 +494,11 @@ class _OfferWidgetState extends State<OfferWidget> {
       ),
     );
 
-    final dir = await getTemporaryDirectory();
-    final path = '${dir.path}/offer.pdf';
-    final file = File(path);
-    await file.writeAsBytes(await pdf.save());
-
-    await Share.shareXFiles(
-      [XFile(path)],
+    final bytes = await pdf.save();
+    await shareOrDownloadBytes(
+      bytes: bytes,
+      filename: 'offer.pdf',
+      mimeType: 'application/pdf',
       text: 'عرض السعر',
     );
   }

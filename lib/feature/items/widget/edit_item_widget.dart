@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../models/item_model.dart';
 import '../function/item_action.dart';
 
@@ -27,7 +26,7 @@ class _EditItemWidget extends State<EditItemWidget>{
   TextEditingController _des=TextEditingController();
   int lastcount=0;
   String doc="";
-  File? _image;
+  XFile? _image;
   bool _showprice=false;
   @override
   void initState() {
@@ -109,8 +108,8 @@ class _EditItemWidget extends State<EditItemWidget>{
                 backgroundColor: Colors.white,
                 child: _image != null
                     ? ClipOval(
-                  child: Image.file(
-                    _image!,
+                  child: Image(
+                    image: imageProviderForXFile(_image!),
                     width: screenWidth * 0.3,
                     height: screenWidth * 0.3,
                     fit: BoxFit.cover,
@@ -373,7 +372,7 @@ class _EditItemWidget extends State<EditItemWidget>{
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
     }
 
@@ -443,7 +442,7 @@ class _EditItemWidget extends State<EditItemWidget>{
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
     }
 

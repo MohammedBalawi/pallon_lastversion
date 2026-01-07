@@ -1,11 +1,11 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../Core/Utils/storage_upload.dart';
 import '../../../Core/Utils/manager_fonts.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../splash/views/splash_view.dart';
@@ -14,11 +14,11 @@ FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
 
-void updateProfile(String name, String phone, File image, BuildContext context) async {
+void updateProfile(String name, String phone, XFile image, BuildContext context) async {
   try {
     final path = "agent/photos/${auth.currentUser!.uid}-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
 

@@ -1,20 +1,19 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:googleapis/admin/reports_v1.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../Core/Utils/storage_upload.dart';
 import '../../../models/item_model.dart';
 
 final FirebaseFirestore _firestore=FirebaseFirestore.instance;
 
-void SaveNewItem(ItemModel item,File image,BuildContext context)async{
+void SaveNewItem(ItemModel item,XFile image,BuildContext context)async{
   try{
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     await _firestore.collection('item').doc().set({
@@ -58,12 +57,12 @@ void SaveNewItem(ItemModel item,File image,BuildContext context)async{
     Get.back();
   }
 }
-void EditItemAction(ItemModel item,File image,BuildContext context,int last)async{
+void EditItemAction(ItemModel item,XFile? image,BuildContext context,int last)async{
   try{
     if(image!=null){
       final path = "item/photos/item-${DateTime.now().toString()}.jpg";
       final ref = FirebaseStorage.instance.ref().child(path);
-      final uploadTask = ref.putFile(image);
+      final uploadTask = await uploadXFile(ref, image);
       final snapshot = await uploadTask.whenComplete(() {});
       final urlDownload = await snapshot.ref.getDownloadURL();
       await _firestore.collection('item').doc(item.doc).update({
@@ -247,6 +246,5 @@ Future<List<ItemModel>> GetAllStore(BuildContext context)async{
     return items;
   }
 }
-
 
 

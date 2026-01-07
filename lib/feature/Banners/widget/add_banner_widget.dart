@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +5,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../functions/banner_function.dart';
 
@@ -19,8 +19,8 @@ class AddBannerWidget extends StatefulWidget {
 class _AddBannerWidget extends State<AddBannerWidget> {
   final TextEditingController _link = TextEditingController();
 
-  File? _image;
-  File? _image2;
+  XFile? _image;
+  XFile? _image2;
 
   String _typeaction = 'same';
   bool _show = false;
@@ -103,8 +103,8 @@ class _AddBannerWidget extends State<AddBannerWidget> {
                           backgroundColor: Colors.white,
                           child: _image != null
                               ? ClipOval(
-                            child: Image.file(
-                              _image!,
+                            child: Image(
+                              image: imageProviderForXFile(_image!),
                               width: screenWidth * 0.32,
                               height: screenWidth * 0.32,
                               fit: BoxFit.cover,
@@ -235,8 +235,8 @@ class _AddBannerWidget extends State<AddBannerWidget> {
                             backgroundColor: Colors.grey[100],
                             child: _image2 != null
                                 ? ClipOval(
-                              child: Image.file(
-                                _image2!,
+                              child: Image(
+                                image: imageProviderForXFile(_image2!),
                                 width: screenWidth * 0.28,
                                 height: screenWidth * 0.28,
                                 fit: BoxFit.cover,
@@ -404,7 +404,7 @@ class _AddBannerWidget extends State<AddBannerWidget> {
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
     }
 
@@ -425,7 +425,7 @@ class _AddBannerWidget extends State<AddBannerWidget> {
 
     if (pickedFile != null) {
       setState(() {
-        _image2 = File(pickedFile.path);
+        _image2 = pickedFile;
       });
     }
 

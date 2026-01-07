@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../../Core/Utils/app_snack.dart';
 import '../../../Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/local_image_provider.dart';
 import '../../../Core/Widgets/image_view.dart';
 import '../../../models/catalog_item_model.dart';
 import '../../../models/order_model.dart';
@@ -1392,8 +1392,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
               );
             },
           )
-              : Image.file(
-            File(p),
+              : Image(
+            image: localImageProvider(p),
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) => const Center(
               child: Icon(Icons.broken_image, size: 22, color: Colors.grey),

@@ -1,20 +1,21 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../../Core/Utils/storage_upload.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/banner_model.dart';
 
 
 final FirebaseFirestore _firestore=FirebaseFirestore.instance;
 
-void AddBannerSame(BuildContext context,File image)async{
+void AddBannerSame(BuildContext context,XFile image)async{
   try{
     String doc=DateTime.now().toString();
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).set({
@@ -32,12 +33,12 @@ void AddBannerSame(BuildContext context,File image)async{
 }
 
 
-void AddBannerLink(BuildContext context,File image,TextEditingController link)async{
+void AddBannerLink(BuildContext context,XFile image,TextEditingController link)async{
   try{
     String doc=DateTime.now().toString();
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).set({
@@ -54,17 +55,17 @@ void AddBannerLink(BuildContext context,File image,TextEditingController link)as
   }
 }
 
-void AddBannerImage(BuildContext context,File image,File image2)async{
+void AddBannerImage(BuildContext context,XFile image,XFile image2)async{
   try{
     String doc=DateTime.now().toString();
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     final path2 = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref2 = FirebaseStorage.instance.ref().child(path2);
-    final uploadTask2 = ref2.putFile(image2!);
+    final uploadTask2 = await uploadXFile(ref2, image2);
     final snapshot2 = await uploadTask2.whenComplete(() {});
     final urlDownload2 = await snapshot2.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).set({
@@ -92,11 +93,11 @@ void DeleteBanner(BuildContext context,BannerModel banner)async{
   }
 }
 
-void UpdateSame(BuildContext context ,File image,String doc)async{
+void UpdateSame(BuildContext context ,XFile image,String doc)async{
   try{
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).update({
@@ -112,11 +113,11 @@ void UpdateSame(BuildContext context ,File image,String doc)async{
   }
 }
 
-void UpdateImage(BuildContext context,File image,String doc)async{
+void UpdateImage(BuildContext context,XFile image,String doc)async{
   try{
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).update({
@@ -132,11 +133,11 @@ void UpdateImage(BuildContext context,File image,String doc)async{
 }
 
 
-void UpdateImage2(BuildContext context,File image,String doc)async{
+void UpdateImage2(BuildContext context,XFile image,String doc)async{
   try{
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).update({
@@ -152,16 +153,16 @@ void UpdateImage2(BuildContext context,File image,String doc)async{
 }
 
 
-void UpdateImage3(BuildContext context,File image,File image2,String doc)async{
+void UpdateImage3(BuildContext context,XFile image,XFile image2,String doc)async{
   try{
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     final path2 = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref2 = FirebaseStorage.instance.ref().child(path2);
-    final uploadTask2 = ref2.putFile(image2!);
+    final uploadTask2 = await uploadXFile(ref2, image2);
     final snapshot2 = await uploadTask2.whenComplete(() {});
     final urlDownload2 = await snapshot2.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).update({
@@ -191,11 +192,11 @@ void UpdateLink(BuildContext context,String doc,TextEditingController link)async
   }
 }
 
-void UpdateLink2(BuildContext context,String doc,File image)async{
+void UpdateLink2(BuildContext context,String doc,XFile image)async{
   try{
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).update({
@@ -210,11 +211,11 @@ void UpdateLink2(BuildContext context,String doc,File image)async{
   }
 }
 
-void UpdateLink3(BuildContext context,String doc,File image,TextEditingController link)async{
+void UpdateLink3(BuildContext context,String doc,XFile image,TextEditingController link)async{
   try{
     final path = "item/photos/item-${DateTime.now().toString()}.jpg";
     final ref = FirebaseStorage.instance.ref().child(path);
-    final uploadTask = ref.putFile(image!);
+    final uploadTask = await uploadXFile(ref, image);
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     await _firestore.collection('banner').doc(doc).update({
@@ -229,5 +230,4 @@ void UpdateLink3(BuildContext context,String doc,File image,TextEditingControlle
     showErrorDialog(context, e.toString());
   }
 }
-
 

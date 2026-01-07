@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/catalog_item_model.dart';
@@ -14,7 +13,7 @@ import '../../../models/sub_sub_cat.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-Future<String> _uploadImageAndGetUrl(File image, String basePath) async {
+Future<String> _uploadImageAndGetUrl(XFile image, String basePath) async {
   try {
     final fileName = DateTime.now().millisecondsSinceEpoch.toString();
     final path = "$basePath-$fileName.jpg";
@@ -54,7 +53,7 @@ Future<void> CreateSub3Catalog(
   Catalog catalog,
   SubCatModel sub,
   SubSubCatModel subsub,
-  File image,
+  XFile image,
   TextEditingController name,
 ) async {
   try {
@@ -136,7 +135,7 @@ Future<void> EditSub3CatalogImage(
   SubSubCatModel subsub,
   String sub3Doc,
   TextEditingController name,
-  File image,
+  XFile image,
 ) async {
   try {
     final urlDownload = await _uploadImageAndGetUrl(
@@ -196,7 +195,7 @@ Future<void> CreateSub3Item(
   TextEditingController name,
   TextEditingController des,
   TextEditingController price,
-  File image,
+  XFile image,
 ) async {
   try {
     final itemsRef = _firestore
@@ -242,7 +241,7 @@ Future<void> CreateSub4Catalog(
   SubCatModel sub,
   SubSubCatModel subsub,
   String sub3Doc,
-  File image,
+  XFile image,
   TextEditingController name,
 ) async {
   try {
@@ -301,7 +300,7 @@ Future<void> CreateSub4Item(
   TextEditingController name,
   TextEditingController des,
   TextEditingController price,
-  File image,
+  XFile image,
 ) async {
   try {
     final itemsRef = _firestore
@@ -382,7 +381,7 @@ Future<void> EditSub4CatalogImage(
   String sub3Doc,
   String sub4Doc,
   TextEditingController name,
-  File image,
+  XFile image,
 ) async {
   try {
     final urlDownload = await _uploadImageAndGetUrl(
@@ -440,7 +439,7 @@ Future<void> DeleteSub4Catalog(
 
 Future<void> createCategory(
   TextEditingController name,
-  File image,
+  XFile image,
   BuildContext context,
 ) async {
   try {
@@ -500,7 +499,7 @@ Future<void> EditCategoty2(
 
 Future<void> EditCategoty(
   Catalog cat,
-  File image,
+  XFile image,
   TextEditingController name,
   BuildContext context,
 ) async {
@@ -544,7 +543,7 @@ Future<void> EditCategoty(
 
 Future<void> EditSubCategoryCatalogWidget(
   BuildContext context,
-  File image,
+  XFile? image,
   TextEditingController name,
   Catalog cat,
   SubCatModel sub,
@@ -552,7 +551,7 @@ Future<void> EditSubCategoryCatalogWidget(
   try {
     String? urlDownload;
 
-    if (image.path.isNotEmpty) {
+    if (image != null && image.path.isNotEmpty) {
       urlDownload = await _uploadImageAndGetUrl(
         image,
         "item/photos/item",
@@ -610,7 +609,7 @@ Future<void> DeleteSubCategory(
 
 Future<void> createSubCategory(
   TextEditingController name,
-  File image,
+  XFile image,
   BuildContext context,
   Catalog cat,
 ) async {
@@ -670,7 +669,7 @@ Future<void> CreateItemWidgetFunction(
   TextEditingController name,
   TextEditingController des,
   TextEditingController price,
-  File image,
+  XFile image,
 ) async {
   try {
     final itemsSnap = await _firestore.collection(pathh).get();
@@ -715,7 +714,7 @@ Future<void> CreateCatalogItems(
   TextEditingController name,
   TextEditingController des,
   TextEditingController price,
-  File image,
+  XFile image,
 ) async {
   try {
     final itemsRef = _firestore
@@ -825,7 +824,7 @@ Future<void> EditItem2(
   TextEditingController price,
   String doc,
   String pathh,
-  File image,
+  XFile image,
 ) async {
   try {
     final urlDownload = await _uploadImageAndGetUrl(
@@ -856,7 +855,7 @@ Future<void> EditItemCataglog2(
   String doc,
   Catalog cat,
   SubCatModel sub,
-  File image,
+  XFile image,
   SubSubCatModel subsub,
 ) async {
   try {
@@ -1084,7 +1083,7 @@ Future<void> CreateSubSubCatalog(
   BuildContext context,
   SubCatModel sub,
   Catalog catalog,
-  File image,
+  XFile image,
   TextEditingController name,
 ) async {
   try {
@@ -1136,7 +1135,7 @@ Future<void> EditSubSubImage(
   SubCatModel sub,
   SubSubCatModel subsub,
   TextEditingController name,
-  File image,
+  XFile image,
 ) async {
   try {
     final urlDownload = await _uploadImageAndGetUrl(

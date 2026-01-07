@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +5,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/catalog_model.dart';
 import '../Funcation/catalog_function.dart';
@@ -24,7 +23,7 @@ class CreateSubCatalogWidget extends StatefulWidget {
 
 class _CreateSubCatalogWidgetState extends State<CreateSubCatalogWidget> {
   final TextEditingController _name = TextEditingController();
-  File? _image;
+  XFile? _image;
   bool _loading = false;
 
   @override
@@ -102,8 +101,8 @@ class _CreateSubCatalogWidgetState extends State<CreateSubCatalogWidget> {
                       backgroundColor: Colors.grey[200],
                       child: _image != null
                           ? ClipOval(
-                        child: Image.file(
-                          _image!,
+                        child: Image(
+                          image: imageProviderForXFile(_image!),
                           width: screenWidth * 0.36,
                           height: screenWidth * 0.36,
                           fit: BoxFit.cover,
@@ -364,7 +363,7 @@ class _CreateSubCatalogWidgetState extends State<CreateSubCatalogWidget> {
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(

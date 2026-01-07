@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,6 +7,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../../Core/Utils/app.images.dart';
 import '../../../Core/Utils/image_picker_utils.dart';
 import '../../../Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../Core/Widgets/social_media_button.dart';
 import '../function/Auth_Functions.dart';
@@ -24,7 +23,7 @@ class AuthSignupWidget extends StatefulWidget {
 }
 
 class _AuthSignupWidgetState extends State<AuthSignupWidget> {
-  File? _image;
+  XFile? _image;
 
   final TextEditingController _name = TextEditingController();
   final TextEditingController _email = TextEditingController();
@@ -98,7 +97,7 @@ class _AuthSignupWidgetState extends State<AuthSignupWidget> {
     );
 
     if (pickedFile != null) {
-      setState(() => _image = File(pickedFile.path));
+      setState(() => _image = pickedFile);
     }
   }
 
@@ -263,7 +262,9 @@ class _AuthSignupWidgetState extends State<AuthSignupWidget> {
                                       radius: screenWidth * 0.14,
                                       backgroundColor: const Color(0xFF007530),
                                       backgroundImage:
-                                      _image != null ? FileImage(_image!) : null,
+                                      _image != null
+                                          ? imageProviderForXFile(_image!)
+                                          : null,
                                       child: _image == null
                                           ? Icon(
                                         Icons.person,

@@ -1,13 +1,13 @@
-import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:pallon_lastversion/models/item_model.dart';
 import 'package:pallon_lastversion/models/req_data_model.dart';
 import 'package:pallon_lastversion/models/user_model.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
-import 'package:share_plus/share_plus.dart';
 import '../../../Core/Widgets/common_widgets.dart';
+import '../../../Core/Utils/share_download.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 
@@ -33,11 +33,16 @@ Future<void> StoreexportToExcel(BuildContext context,List<ItemModel> item) async
       ];
       sheet.appendRow(row);
     }
-    final directory = await getTemporaryDirectory();
-    final path = '${directory.path}/reports.xlsx';
-    final file = File(path)..createSync(recursive: true);
-    file.writeAsBytesSync(excel.encode()!);
-    await Share.shareXFiles([XFile(path)], text: 'Store Reports Excel File');
+    final bytes = excel.encode();
+    if (bytes == null) {
+      throw StateError('Failed to encode Excel file');
+    }
+    await shareOrDownloadBytes(
+      bytes: Uint8List.fromList(bytes),
+      filename: 'reports.xlsx',
+      mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      text: 'Store Reports Excel File',
+    );
   }
   catch(e){
     ErrorCustom(context,e.toString());
@@ -71,11 +76,13 @@ Future<void> StoreexportToPdf(BuildContext context,List<ItemModel> item) async{
             }
         )
     );
-    final directory = await getTemporaryDirectory();
-    final path = '${directory.path}/reports.pdf';
-    final file = File(path);
-    await file.writeAsBytes(await pdf.save());
-    await Share.shareXFiles([XFile(path)], text: 'Store Reports PDF File');
+    final bytes = await pdf.save();
+    await shareOrDownloadBytes(
+      bytes: bytes,
+      filename: 'reports.pdf',
+      mimeType: 'application/pdf',
+      text: 'Store Reports PDF File',
+    );
   }
   catch(e){
     ErrorCustom(context,e.toString());
@@ -104,11 +111,16 @@ Future<void> UserexportToExcel(BuildContext context,List<UserModel> user) async 
       ];
       sheet.appendRow(row);
     }
-    final directory = await getTemporaryDirectory();
-    final path = '${directory.path}/userreports.xlsx';
-    final file = File(path)..createSync(recursive: true);
-    file.writeAsBytesSync(excel.encode()!);
-    await Share.shareXFiles([XFile(path)], text: 'User Reports Excel File');
+    final bytes = excel.encode();
+    if (bytes == null) {
+      throw StateError('Failed to encode Excel file');
+    }
+    await shareOrDownloadBytes(
+      bytes: Uint8List.fromList(bytes),
+      filename: 'userreports.xlsx',
+      mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      text: 'User Reports Excel File',
+    );
   }
   catch(e){
     ErrorCustom(context,e.toString());
@@ -144,11 +156,13 @@ Future<void> UserexportToPdf(BuildContext context,List<UserModel> user) async{
             }
         )
     );
-    final directory = await getTemporaryDirectory();
-    final path = '${directory.path}/Userreports.pdf';
-    final file = File(path);
-    await file.writeAsBytes(await pdf.save());
-    await Share.shareXFiles([XFile(path)], text: 'User Reports PDF File');
+    final bytes = await pdf.save();
+    await shareOrDownloadBytes(
+      bytes: bytes,
+      filename: 'Userreports.pdf',
+      mimeType: 'application/pdf',
+      text: 'User Reports PDF File',
+    );
   }
   catch(e){
     ErrorCustom(context,e.toString());
@@ -191,11 +205,13 @@ Future<void> OrderexportToPdf(BuildContext context,List<ReqDataModel> req) async
             }
         )
     );
-    final directory = await getTemporaryDirectory();
-    final path = '${directory.path}/orderreports.pdf';
-    final file = File(path);
-    await file.writeAsBytes(await pdf.save());
-    await Share.shareXFiles([XFile(path)], text: 'order Reports PDF File');
+    final bytes = await pdf.save();
+    await shareOrDownloadBytes(
+      bytes: bytes,
+      filename: 'orderreports.pdf',
+      mimeType: 'application/pdf',
+      text: 'order Reports PDF File',
+    );
   }
   catch(e){
     ErrorCustom(context,e.toString());
@@ -238,11 +254,16 @@ Future<void> OrderexportToExcel(BuildContext context,List<ReqDataModel> req) asy
       ];
       sheet.appendRow(row);
     }
-    final directory = await getTemporaryDirectory();
-    final path = '${directory.path}/orderreports.xlsx';
-    final file = File(path)..createSync(recursive: true);
-    file.writeAsBytesSync(excel.encode()!);
-    await Share.shareXFiles([XFile(path)], text: 'order Reports Excel File');
+    final bytes = excel.encode();
+    if (bytes == null) {
+      throw StateError('Failed to encode Excel file');
+    }
+    await shareOrDownloadBytes(
+      bytes: Uint8List.fromList(bytes),
+      filename: 'orderreports.xlsx',
+      mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      text: 'order Reports Excel File',
+    );
   }
   catch(e){
     ErrorCustom(context,e.toString());

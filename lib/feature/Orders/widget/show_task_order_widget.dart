@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pallon_lastversion/feature/Tasks/view/desgin_task_view.dart';
 import 'package:pallon_lastversion/feature/Tasks/widget/cheeck_list_driver_widget.dart';
 import 'package:pallon_lastversion/feature/Tasks/widget/vendor_task_widget.dart';
@@ -28,7 +25,6 @@ class ShowTaskOrderWidget extends StatefulWidget{
 class _ShowTaskOrderWidget extends State<ShowTaskOrderWidget>{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore _firestore=FirebaseFirestore.instance;
-  File? _image;
   UserModel userModel = UserModel(
       doc: "doc", email: "email", phone: "phone", name: "name", pic: "pic", type: "type");
   @override
@@ -342,23 +338,6 @@ class _ShowTaskOrderWidget extends State<ShowTaskOrderWidget>{
            ),
          ),
         ],
-      ),
-    );
-  }
-  void _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Image selection simulated!'.tr),
-        backgroundColor: Color(0xFF07933E),
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,10 +14,10 @@ final FirebaseFirestore _firestore=FirebaseFirestore.instance;
 Widget DesginImageStream(BuildContext context,OrderModel order,UserModel user){
   Future<void> _pickImage() async {
     final pickedFiles = await pickMultiImageWithPermission(context);
-    List<File> _images=[];
+    final List<XFile> images = [];
     if (pickedFiles.isNotEmpty) {
-      _images.addAll(pickedFiles.map((xFile) => File(xFile.path)));
-      UploadDesgin(_images,context,order);
+      images.addAll(pickedFiles);
+      UploadDesgin(images,context,order);
     }
   }
   final screenHeight = MediaQuery.of(context).size.height;

@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/catalog_model.dart';
 import '../../../models/sub_cat_model.dart';
@@ -32,7 +31,7 @@ class CreateSub4View extends StatefulWidget {
 
 class _CreateSub4ViewState extends State<CreateSub4View> {
   final TextEditingController _name = TextEditingController();
-  File? _image;
+  XFile? _image;
   bool _loading = false;
 
   @override
@@ -107,8 +106,8 @@ class _CreateSub4ViewState extends State<CreateSub4View> {
                     backgroundColor: Colors.grey[200],
                     child: _image != null
                         ? ClipOval(
-                      child: Image.file(
-                        _image!,
+                      child: Image(
+                        image: imageProviderForXFile(_image!),
                         width: screenWidth * 0.36,
                         height: screenWidth * 0.36,
                         fit: BoxFit.cover,
@@ -359,7 +358,7 @@ class _CreateSub4ViewState extends State<CreateSub4View> {
     );
 
     if (picked != null) {
-      setState(() => _image = File(picked.path));
+      setState(() => _image = picked);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

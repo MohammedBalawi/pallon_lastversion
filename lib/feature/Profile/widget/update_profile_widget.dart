@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:pallon_lastversion/Core/Utils/manager_fonts.dart';
 import '../../../Core/Utils/image_picker_utils.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../models/user_model.dart';
 import '../function/profile_function.dart';
 import 'custom_text_field.dart';
@@ -25,7 +24,7 @@ class UpdateProfileWidget extends StatefulWidget {
 class _UpdateProfileWidget extends State<UpdateProfileWidget> {
   final TextEditingController _nameController  = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  File? _image;
+  XFile? _image;
 
   @override
   void initState() {
@@ -55,7 +54,7 @@ class _UpdateProfileWidget extends State<UpdateProfileWidget> {
     );
 
     if (pickedFile != null) {
-      setState(() => _image = File(pickedFile.path));
+      setState(() => _image = pickedFile);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Image selected successfully'.tr),
@@ -72,7 +71,7 @@ class _UpdateProfileWidget extends State<UpdateProfileWidget> {
     );
 
     if (pickedFile != null) {
-      setState(() => _image = File(pickedFile.path));
+      setState(() => _image = pickedFile);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Image selected successfully'.tr),
@@ -334,8 +333,8 @@ class _UpdateProfileWidget extends State<UpdateProfileWidget> {
 
   Widget _buildProfileImage(double screenWidth) {
     if (_image != null) {
-      return Image.file(
-        _image!,
+      return Image(
+        image: imageProviderForXFile(_image!),
         width: screenWidth * 0.32,
         height: screenWidth * 0.32,
         fit: BoxFit.cover,

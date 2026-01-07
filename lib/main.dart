@@ -115,7 +115,32 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final messaging = FirebaseMessaging.instance;
-  await messaging.requestPermission(alert: true, badge: true, sound: true);
+  final settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  if (kIsWeb) {
+    final vapidKey = const String.fromEnvironment('FCM_VAPID_KEY');
+    if (settings.authorizationStatus == AuthorizationStatus.authorized ||
+        settings.authorizationStatus == AuthorizationStatus.provisional) {
+      if (vapidKey.isNotEmpty) {
+        try {
+          final token = await messaging.getToken(vapidKey: vapidKey);
+          if (token == null) {
+            debugPrint('FCM web token is null (permission not granted).');
+          }
+        } catch (e) {
+          debugPrint('FCM web getToken failed: $e');
+        }
+      } else {
+        debugPrint('FCM_VAPID_KEY not set; skipping web token request.');
+      }
+    } else {
+      debugPrint('FCM permission not granted on web.');
+    }
+  }
 
   if (!kIsWeb) {
     await setupFlutterNotifications();
@@ -148,25 +173,29 @@ Future<void> main() async {
     );
   }
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  if (!kIsWeb) {
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  }
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     showFlutterNotification(message);
   });
 
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    debugPrint('Notification opened app (background): ${message.messageId}');
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.offAllNamed(SplashView.id);
+  if (!kIsWeb) {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      debugPrint('Notification opened app (background): ${message.messageId}');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.offAllNamed(SplashView.id);
+      });
     });
-  });
 
-  final initialMessage = await messaging.getInitialMessage();
-  if (initialMessage != null) {
-    debugPrint('App opened from terminated by notification: ${initialMessage.messageId}');
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.offAllNamed(SplashView.id);
-    });
+    final initialMessage = await messaging.getInitialMessage();
+    if (initialMessage != null) {
+      debugPrint('App opened from terminated by notification: ${initialMessage.messageId}');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.offAllNamed(SplashView.id);
+      });
+    }
   }
 
   final translations = await loadTranslations();

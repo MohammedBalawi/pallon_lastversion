@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -10,6 +9,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pallon_lastversion/Core/Utils/manager_fonts.dart';
 import '../../../Core/Utils/image_picker_utils.dart';
+import '../../../Core/Utils/local_image_provider.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../Core/Widgets/image_view.dart';
 import '../../../models/catalog_item_model.dart';
@@ -54,7 +55,7 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
   bool _AddDesgin = false;
   bool _showModel = false;
 
-  final List<File> _images = [];
+  final List<XFile> _images = [];
 
   List<Catalog> _fullCatalog = [];
   Catalog? _selectedCatalog;
@@ -126,7 +127,7 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
   final TextEditingController _manualName = TextEditingController();
   final TextEditingController _manualPrice = TextEditingController();
   final TextEditingController _manualNotes = TextEditingController();
-  File? _manualImage;
+  XFile? _manualImage;
 
   int _selectreport = 0;
 
@@ -262,7 +263,7 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
     );
 
     if (file != null) {
-      setState(() => _manualImage = File(file.path));
+      setState(() => _manualImage = file);
     }
   }
 
@@ -276,7 +277,7 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
         imageQuality: 80,
       );
       if (pickedFiles.isNotEmpty) {
-        setState(() => _images.addAll(pickedFiles.map((x) => File(x.path))));
+        setState(() => _images.addAll(pickedFiles));
       }
     } else {
       final XFile? file = await pickImageWithPermission(
@@ -285,7 +286,7 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
         imageQuality: 80,
       );
       if (file != null) {
-        setState(() => _images.add(File(file.path)));
+        setState(() => _images.add(file));
       }
     }
   }
@@ -1193,7 +1194,7 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
-                            image: FileImage(_images[index]),
+                            image: imageProviderForXFile(_images[index]),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -1267,9 +1268,7 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
     final p = (path).trim();
     if (p.isEmpty) return null;
     if (p.startsWith("http")) return CachedNetworkImageProvider(p);
-    final f = File(p);
-    if (f.existsSync()) return FileImage(f);
-    return null;
+    return localImageProvider(p);
   }
 
   Widget _buildItemTable(BuildContext context) {
@@ -1309,7 +1308,7 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
                     ? CircleAvatar(
                         backgroundImage: CachedNetworkImageProvider(item.path))
                     : CircleAvatar(
-                        backgroundImage: FileImage(File(item.path)))),
+                        backgroundImage: localImageProvider(item.path))),
           ),
           DataCell(Text(unitPrice.toStringAsFixed(2),
               style: TextStyle(fontFamily: ManagerFontFamily.fontFamily))),
@@ -1468,8 +1467,8 @@ class _CompeleteReqWidget extends State<CompeleteReqWidget> {
                   )
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: Image.file(
-                      _manualImage!,
+                    child: Image(
+                      image: imageProviderForXFile(_manualImage!),
                       fit: BoxFit.cover,
                       width: double.infinity,
                     ),

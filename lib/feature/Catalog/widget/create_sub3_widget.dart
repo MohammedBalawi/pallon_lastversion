@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../Core/Utils/manager_fonts.dart';
+import '../../../Core/Utils/xfile_image_provider.dart';
 import '../../../Core/Widgets/common_widgets.dart';
 import '../../../models/catalog_model.dart';
 import '../../../models/sub_cat_model.dart';
@@ -29,7 +28,7 @@ class CreateSub3Widget extends StatefulWidget {
 
 class _CreateSub3WidgetState extends State<CreateSub3Widget> {
   final TextEditingController _name = TextEditingController();
-  File? _image;
+  XFile? _image;
   bool _loading = false;
 
   @override
@@ -105,8 +104,8 @@ class _CreateSub3WidgetState extends State<CreateSub3Widget> {
                     backgroundColor: Colors.grey[200],
                     child: _image != null
                         ? ClipOval(
-                      child: Image.file(
-                        _image!,
+                      child: Image(
+                        image: imageProviderForXFile(_image!),
                         width: screenWidth * 0.36,
                         height: screenWidth * 0.36,
                         fit: BoxFit.cover,
@@ -357,7 +356,7 @@ class _CreateSub3WidgetState extends State<CreateSub3Widget> {
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(

@@ -1,10 +1,10 @@
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 Future<bool> ensureCameraPermission(BuildContext context) async {
+  if (kIsWeb) return true;
   final status = await Permission.camera.request();
   if (status.isGranted) return true;
   await _showPermissionDialog(
@@ -16,7 +16,9 @@ Future<bool> ensureCameraPermission(BuildContext context) async {
 }
 
 Future<bool> ensureGalleryPermission(BuildContext context) async {
-  if (!Platform.isAndroid) {
+  if (kIsWeb) return true;
+
+  if (defaultTargetPlatform != TargetPlatform.android) {
     final status = await Permission.photos.request();
     if (status.isGranted) return true;
     await _showPermissionDialog(

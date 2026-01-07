@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_calendar/device_calendar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -54,6 +55,7 @@ Future<UserModel?> GetUserData(String uid) async {
 }
 
 void getPermesion() async {
+  if (kIsWeb) return;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -102,6 +104,7 @@ void getPermesion() async {
 }
 
 Future<void> showNotification(String title, String body) async {
+  if (kIsWeb) return;
   var androidDetails = AndroidNotificationDetails(
     'channelId',
     'channelName',
@@ -237,6 +240,10 @@ Future<void> SaveInCalender(
     int hour,
     int minute,
     ) async {
+  if (kIsWeb) {
+    showErrorDialog(context, "Calendar is not supported on web.");
+    return;
+  }
   try {
     tz.initializeTimeZones();
 
